@@ -1,4 +1,3 @@
-import * as admin from 'firebase-admin';
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { OAuth2Client } from 'google-auth-library';
