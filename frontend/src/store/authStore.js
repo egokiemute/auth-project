@@ -1,8 +1,9 @@
 import { create } from "zustand";
 import axios from "axios";
 
-// const API_URL = import.meta.env.MODE === "development" ? "http://localhost:8000/api/auth" : "/api/auth";
-const API_URL = "http://localhost:8000/api/auth"
+// const API_URL = "http://localhost:8000/api/auth"
+const API_URL = import.meta.env.MODE === "development" ? "http://localhost:8000/api/auth" : "/api/auth";
+// const API_URL = "http://localhost:8000/api/auth"
 
 axios.defaults.withCredentials = true;
 
