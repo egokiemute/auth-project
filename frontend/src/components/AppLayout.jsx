@@ -12,11 +12,11 @@ const AppLayout = ({ children }) => {
   const hideFooter = ['/register', '/login']
 
   return (
-    <>
+    <div className='font-acronym antialiased'>
       {!hideHeaderPages.includes(location.pathname) && <Header />}
-      <main>{children}</main>
+      <main className=''>{children}</main>
       {!hideFooter.includes(location.pathname) && <Footer />}
-    </>
+    </div>
   );
 };
 

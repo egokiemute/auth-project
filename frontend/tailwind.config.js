@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        acronym: ["Acronym", "sans-serif"],
+      },
       colors: {
         primary: {
           DEFAULT: "#000000",

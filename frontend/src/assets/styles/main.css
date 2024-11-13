@@ -1,0 +1,13 @@
+@font-face {
+    font-family: "Acronym";
+    src: url("/src/assets/fonts/Acronym-Regular.ttf") format("truetype");
+    font-weight: 400; /* normal weight */
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Acronym";
+    src: url("/src/assets/fonts/Acronym-Bold.ttf") format("truetype");
+    font-weight: 700; /* bold weight */
+    font-style: normal;
+  }
