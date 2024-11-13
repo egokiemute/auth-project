@@ -8,24 +8,22 @@ import { User } from "../models/user.model.js";
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-export const register = async (req, res) => {
-    const { email, password, name } = req.body;
+export const initiate = async (req, res) => {
+    const { email } = req.body;
     try {
-        if (!email || !password || !name) {
-            throw new Error("All fields are required");
+        if (!email) {
+            throw new Error("Enter your email");
         }
 
-        const userAlreadyExist = await User.findOne({ email })
+        const userAlreadyExist = await User.findOne({ email });
         if (userAlreadyExist) {
-            return res.status(400).json({ success: false, message: "User already exist" });
+            return res.status(400).json({ success: false, message: "Email already exist, login instead." })
         }
 
-        const hashedPassword = await bcrypt.hash(password, 12);
         const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
+
         const user = new User({
             email,
-            password: hashedPassword,
-            name,
             verificationToken,
             verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
         })
@@ -33,18 +31,67 @@ export const register = async (req, res) => {
         await user.save();
 
         // jwt
-        generateTokenAndSetCookie(res, user._id)
+        generateTokenAndSetCookie(res, user._id);
 
-        sendVerificationEmail(user.email, verificationToken)
+        sendVerificationEmail(user.email, verificationToken);
 
         res.status(201).json({
             success: true,
-            message: "User created successfully",
+            message: "User created successfully, next step",
             user: {
                 ...user._doc,
-                password: undefined,
             }
         })
+
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message });
+    }
+}
+
+export const register = async (req, res) => {
+    const { email, password, firstname, lastname, phone, nin } = req.body;
+
+    try {
+        // Check if the required fields are present
+        if (!email || !password || !firstname || !lastname || !phone || !nin) {
+            throw new Error("All fields are required");
+        }
+
+        // Find the existing user by email
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        // Update user details
+        user.firstname = firstname;
+        user.lastname = lastname;
+        user.phone = phone;
+        user.nin = nin;
+        user.password = hashedPassword;
+
+        // Save the updated user
+        await user.save();
+
+        // Generate JWT and set it as a cookie
+        generateTokenAndSetCookie(res, user._id);
+
+        // Send welcome email
+        await sendWelcomeEmail(user.email, user.firstname);
+
+        // Send response to client
+        res.status(200).json({
+            success: true,
+            message: "User updated successfully",
+            user: {
+                ...user._doc,
+                password: undefined, // Hide password in response
+            }
+        });
 
     } catch (error) {
         res.status(400).json({ success: false, message: error.message });
@@ -113,8 +160,6 @@ export const verifyEmail = async (req, res) => {
         user.verificationToken = undefined;
         user.verificationTokenExpiresAt = undefined;
         await user.save();
-
-        await sendWelcomeEmail(user.email, user.name);
 
         res.status(200).json({
             success: true,

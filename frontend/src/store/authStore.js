@@ -20,10 +20,21 @@ export const useAuthStore = create((set) => ({
         error: null,
     }),
 
-    signup: async (email, password, name) => {
+    initiate: async (email) => {
         set({ isLoading: true, error: null });
         try {
-            const response = await axios.post(`${API_URL}/register`, { email, password, name });
+            const response = await axios.post(`${API_URL}/initiate`, { email });
+            set({ user: response.data.user, isLoading: false });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error email stage", isLoading: false });
+            throw error;
+        }
+    },
+
+    signup: async (email, password, firstname, lastname, phone, nin) => {
+        set({ isLoading: true, error: null });
+        try {
+            const response = await axios.post(`${API_URL}/register`, { email, password, firstname, lastname, phone, nin });
             set({ user: response.data.user, isAuthenticated: true, isLoading: false });
         } catch (error) {
             set({ error: error.response.data.message || "Error signing up", isLoading: false });
@@ -61,7 +72,7 @@ export const useAuthStore = create((set) => ({
         set({ isLoading: true, error: null });
         try {
             const response = await axios.post(`${API_URL}/verify-email`, { code });
-            set({ user: response.data.user, isAuthenticated: true, isLoading: false });
+            set({ user: response.data.user, isLoading: false });
             return response.data;
         } catch (error) {
             set({ error: error.response.data.message || "Error verifying email", isLoading: false });

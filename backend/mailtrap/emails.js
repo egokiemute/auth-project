@@ -25,7 +25,7 @@ export const sendVerificationEmail = async (email, verificationToken) => {
 	}
 };
 
-export const sendWelcomeEmail = async (email, name) => {
+export const sendWelcomeEmail = async (email, firstname) => {
 	const recipient = [{ email }];
 
 	try {
@@ -35,7 +35,7 @@ export const sendWelcomeEmail = async (email, name) => {
 			template_uuid: "b00ef186-2bd6-4152-beb6-4d19750db228",
 			template_variables: {
 				company_info_name: "Tab OS",
-				name: name,
+				name: firstname,
 			},
 		});
 

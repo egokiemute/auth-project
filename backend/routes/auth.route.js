@@ -1,5 +1,5 @@
 import express from "express";
-import { login, logout, register, googleAuth, verifyEmail, forgotPassword, resetPassword, checkAuth } from "../controllers/auth.controller.js";
+import { login, logout, register, googleAuth, verifyEmail, forgotPassword, resetPassword, checkAuth, initiate } from "../controllers/auth.controller.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 import { verifyAdminToken } from "../middleware/verifyAdminToken.js";
 import { createSpace } from "../controllers/space.controller.js";
@@ -10,6 +10,7 @@ const router = express.Router();
 router.get("/check-auth", verifyToken, checkAuth);
 
 // Route for Email/Password Registration
+router.post("/initiate", initiate);
 router.post("/register", register);
 
 // Route for Google Sign-Up/Sign-In

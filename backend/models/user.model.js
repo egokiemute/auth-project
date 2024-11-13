@@ -2,10 +2,13 @@ import mongoose from "mongoose";
 
 // Define the schema for a User
 const userSchema = new mongoose.Schema({
-    name: {
+    firstname: {
         type: String,
-        required: true,
-        unique: true,
+        // required: true,
+    },
+    lastname: {
+        type: String,
+        // required: true,
     },
     email: {
         type: String,
@@ -14,12 +17,19 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: function () { return !this.googleId; } // Password required only if not using Google sign-up
+        // required: function () { return !this.googleId; } // Password required only if not using Google sign-up
     },
     googleId: {
         type: String, // New field to store Google ID
         unique: true,
         sparse: true // Allows either a unique Google ID or a unique email/password combination
+    },
+    nin: {
+        type: String,
+    },
+    isNinVerified: {
+        type: Boolean,
+        default: false,
     },
     lastLogin: {
         type: Date,
