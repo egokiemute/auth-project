@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useAuthStore } from "../store/authStore";
 import { useNavigate, useParams } from "react-router-dom";
 import Input from "../components/Input";
-import { Lock } from "lucide-react";
+import { Loader, Lock } from "lucide-react";
 import toast from "react-hot-toast";
 
 const ResetPasswordPage = () => {
@@ -52,7 +52,8 @@ const ResetPasswordPage = () => {
 
         <form onSubmit={handleSubmit}>
           <Input
-            icon={Lock}
+            // icon={Lock}
+            label="Password"
             type="password"
             placeholder="New Password"
             value={password}
@@ -61,6 +62,7 @@ const ResetPasswordPage = () => {
           />
 
           <Input
+           label="Confirm password"
             icon={Lock}
             type="password"
             placeholder="Confirm New Password"
@@ -72,11 +74,13 @@ const ResetPasswordPage = () => {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-200"
+            className="w-full py-3 px-4 bg-black text-white font-bold rounded-lg shadow-lg focus:outline-none focus:ring-2 transition duration-200"
             type="submit"
             disabled={isLoading}
           >
-            {isLoading ? "Resetting..." : "Set New Password"}
+            {isLoading ? (
+              <Loader className="w-6 h-6 animate-spin  mx-auto" />
+            ) : "Set new password"}
           </motion.button>
         </form>
       </div>

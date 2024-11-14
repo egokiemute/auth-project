@@ -12,6 +12,7 @@ import EmailVerificationPage from "./pages/EmailVerificationPage";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
 import AppLayout from "./components/AppLayout";
+import Search from "./pages/Search";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -53,6 +54,7 @@ function App() {
       <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center relative overflow-hidden">
         <Routes>
           <Route path="/" element={"Homepage"} />
+          <Route path='/search' element={<Search />} />
           <Route
             path="/space"
             element={

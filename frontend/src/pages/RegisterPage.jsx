@@ -82,10 +82,10 @@ const RegisterPage = () => {
           {stage === 1 && (
             <div>
               <div className="flex flex-col gap-2 items-start mb-6">
-                <h2 className="text-3xl font-bold text-center text-[#000000E5]">
+                <h2 className="text-2xl font-bold text-center text-[#000000E5]">
                   Welcome to TabOS
                 </h2>
-                <p className="text-xl text-[#000000A3]">
+                <p className="text-base text-[#000000A3]">
                   Enter your email to create an account.
                 </p>
               </div>
@@ -131,13 +131,13 @@ const RegisterPage = () => {
                       maxLength="1"
                       value={digit}
                       onChange={(e) => handleCodeChange(index, e.target.value)}
-                      className="w-12 h-12 text-center text-2xl font-bold bg-gray-700 text-white border-2 border-gray-600 rounded-lg focus:border-green-500 focus:outline-none"
+                      className="w-12 h-12 text-center text-2xl font-bold bg-black text-white border-2 border-gray-600 rounded-lg focus:outline-none"
                     />
                   ))}
                 </div>
                 {error && <p className="text-red-500 mt-2">{error}</p>}
                 <button
-                  className="mt-5 w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none transition duration-200"
+                  className="mt-5 w-full py-3 px-4 bg-gradient-to-r from-black to-black text-white font-bold rounded-lg shadow-lg hover:from-black hover:to-black focus:outline-none transition duration-200"
                   type="submit"
                   disabled={
                     isLoading || verificationCode.some((digit) => !digit)
@@ -194,7 +194,7 @@ const RegisterPage = () => {
                 <PasswordStrengthMeter password={password} />
                 {error && <p className="text-red-500 mt-2">{error}</p>}
                 <button
-                  className="mt-5 w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none transition duration-200"
+                  className="mt-5 w-full py-3 px-4 bg-black  text-white font-bold rounded-lg shadow-lg focus:outline-none transition duration-200"
                   type="submit"
                   disabled={isLoading || !password}
                 >
@@ -205,7 +205,7 @@ const RegisterPage = () => {
           )}
         </div>
       </motion.div>
-      <div className="px-8 py-4 flex justify-center">
+      <div className="px-8 flex justify-center">
         <p className="text-sm text-gray-400">
           Already have an account?{" "}
           <Link to={"/login"} className="text-black font-bold underline">
