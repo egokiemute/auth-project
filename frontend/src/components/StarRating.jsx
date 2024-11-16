@@ -1,15 +1,42 @@
-import { Star, StarHalf } from "lucide-react";
 import React from "react";
-// import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 const StarRating = ({ rating }) => {
   const stars = Array.from({ length: 5 }, (_, index) => {
-    if (rating >= index + 1) {
-      return <Star key={index} className="text-yellow-500" />;
-    } else if (rating >= index + 0.5) {
-      return <StarHalf key={index} className="text-yellow-500" />;
+    const starValue = index + 1;
+
+    if (rating >= starValue) {
+      // Full star
+      return (
+        <div
+          key={index}
+          className="w-5 h-5 bg-black mask mask-star-2"
+          title={`${rating} Stars`}
+        />
+      );
+    } else if (rating > starValue - 1 && rating < starValue) {
+      // Partially filled star for decimals
+      const percentage = (rating - Math.floor(rating)) * 100;
+      return (
+        <div
+          key={index}
+          className="w-5 h-5 bg-gray-200 relative mask mask-star-2"
+          title={`${rating} Stars`}
+        >
+          <div
+            className="absolute top-0 left-0 h-full bg-black mask mask-star-2"
+            style={{ width: `${percentage}%` }}
+          />
+        </div>
+      );
     } else {
-      return <Star key={index} className="text-yellow-500" />;
+      // Empty star
+      return (
+        <div
+          key={index}
+          className="w-5 h-5 bg-gray-200 mask mask-star-2"
+          title={`${rating} Stars`}
+        />
+      );
     }
   });
 

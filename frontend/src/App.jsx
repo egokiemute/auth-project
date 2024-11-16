@@ -13,9 +13,12 @@ import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
 import AppLayout from "./components/AppLayout";
 import Search from "./pages/Search";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminLogin from "./pages/AdminLogin";
+import TabDetail from "./components/TabDetail";
 
 // protect routes that require authentication
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children, requiredRole }) => {
   const { isAuthenticated, user } = useAuthStore();
 
   if (!isAuthenticated) {
@@ -24,6 +27,10 @@ const ProtectedRoute = ({ children }) => {
 
   if (user && !user.isVerified) {
     return <Navigate to="/verify-email" replace />;
+  }
+
+  if (requiredRole && user.role !== requiredRole) {
+    return <Navigate to={user.role === "admin" ? "/admin-dashboard" : "/"} />;
   }
 
   return children;
@@ -51,10 +58,20 @@ function App() {
   if (isCheckingAuth) return <LoadingSpinner />;
   return (
     <AppLayout>
-      <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center relative overflow-hidden">
+      <div className="min-h-screen bg-[#FAFAFA] relative overflow-hidden">
         <Routes>
           <Route path="/" element={"Homepage"} />
-          <Route path='/search' element={<Search />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/tab/:id" element={<TabDetail />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route
+            path="/admin-dashboard"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/space"
             element={

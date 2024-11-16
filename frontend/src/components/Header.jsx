@@ -2,7 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { useAuthStore } from "../store/authStore";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { CircleHelp, LogOut, Settings, User, User2Icon, UserCogIcon } from "lucide-react";
+import {
+  CircleHelp,
+  House,
+  LogOut,
+  Settings,
+  Space,
+  User,
+  User2Icon,
+  UserCogIcon,
+} from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
@@ -13,7 +22,7 @@ const Header = () => {
 
   const isLogin = location.pathname === "/login";
   const isSignup = location.pathname === "/register";
-//   console.log(user);
+  console.log(user);
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -61,37 +70,31 @@ const Header = () => {
     <div className="container font-acronym flex items-center justify-between py-4">
       <div className="flex items-center gap-6">
         <img src="/logo.svg" alt="TabOS" />
-        <form onSubmit={handleSearchSubmit} className="flex items-center gap-2">
+        <form onSubmit={handleSearchSubmit} className="flex items-center gap-1">
           <button>
-          <img
-            src="/search-icon.svg"
-            alt="TabOS Search Icon"
-            width={16}
-            height={16}
-          />
+            <img
+              src="/search-icon.svg"
+              alt="TabOS Search Icon"
+              width={16}
+              height={16}
+            />
           </button>
           <input
             type="text"
             placeholder="Search"
-            className="text-sm font-medium text-[#000000A3] placeholder:text-[#000000A3] outline-none focus:none border:none"
+            className="text-sm font-medium text-[#000000A3] placeholder:text-[#000000A3] outline-none focus:outline-none border-none"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </form>
       </div>
       <div className="flex items-center gap-6">
-        {user?.role === "user" ? (
-          <ul className="flex items-center gap-4 text-[#000000A3] font-bold text-sm">
-            <Link className="font-acronym" to="/search">
-              Find a space
-            </Link>
-            <Link to="reservations">My reservations</Link>
-          </ul>
-        ) : (
-          <ul className="flex items-center gap-4 text-[#000000A3] font-bold text-sm">
-            <p>Admin navs</p>
-          </ul>
-        )}
+        <ul className="flex items-center gap-4 text-[#000000A3] font-bold text-sm">
+          <Link className="font-acronym" to="/search">
+            Find a space
+          </Link>
+          <Link to="reservations">My reservations</Link>
+        </ul>
 
         {user ? (
           <ul className="relative">
@@ -115,19 +118,28 @@ const Header = () => {
                 variants={popupVariants}
                 transition={{ duration: 0.2 }}
                 className="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-lg z-10"
+                onClick={(e) => e.stopPropagation()}
+                ref={popupRef}
               >
+                <Link
+                  to="/space"
+                  className="flex items-center gap-1 px-4 py-3 text-gray-700 hover:bg-gray-100"
+                >
+                  <House className="w-5 h-5" />
+                  <span>Dashboard</span>
+                </Link>
                 <Link
                   to="/profile"
                   className="flex items-center gap-1 px-4 py-3 text-gray-700 hover:bg-gray-100"
                 >
-                    <User className="w-5 h-5" />
+                  <User className="w-5 h-5" />
                   <span>View Profile</span>
                 </Link>
                 <Link
                   to="/profile"
                   className="flex items-center gap-1 px-4 py-3 text-gray-700 hover:bg-gray-100"
                 >
-                    <Settings className="w-5 h-5" />
+                  <Settings className="w-5 h-5" />
                   <span>Settings</span>
                 </Link>
                 <div className="w-full bg-gray-200 h-[1px]" />
@@ -135,15 +147,15 @@ const Header = () => {
                   to="/profile"
                   className="flex items-center gap-1 px-4 py-3 text-gray-700 hover:bg-gray-100"
                 >
-                    <CircleHelp className="w-5 h-5" />
+                  <CircleHelp className="w-5 h-5" />
                   <span>Help</span>
                 </Link>
                 <button
                   onClick={logout}
                   className="flex items-center gap-1 w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-100"
                 >
-                     <LogOut className="w-5 h-5" />
-                     <span>Logout</span>
+                  <LogOut className="w-5 h-5" />
+                  <span>Logout</span>
                 </button>
               </motion.div>
             )}

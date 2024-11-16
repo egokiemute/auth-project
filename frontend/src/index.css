@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.mask-star-2 {
+    mask: url('/star.svg');
+    -webkit-mask: url('/star.svg');
+    mask-size: cover;
+    -webkit-mask-size: cover;
+  }

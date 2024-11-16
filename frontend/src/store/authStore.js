@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // const API_URL = "http://localhost:8000/api/auth"
 const API_URL = import.meta.env.MODE === "development" ? "http://localhost:8000/api/auth" : "/api/auth";
@@ -47,14 +48,36 @@ export const useAuthStore = create((set) => ({
         set({ isLoading: true, error: null });
         try {
             const response = await axios.post(`${API_URL}/login`, { email, password });
+            const user = response.data.user;
             set({
                 isAuthenticated: true,
-                user: response.data.user,
+                user,
                 error: null,
                 isLoading: false,
             });
         } catch (error) {
             set({ error: error.response?.data?.message || "Error logging in", isLoading: false });
+            throw error;
+        }
+    },
+    adminLogin: async (email, password) => {
+        set({ isLoading: true, error: null });
+        try {
+            const response = await axios.post(`${API_URL}/admin-login`, { email, password });
+            const user = response.data.user;
+
+            if (user.role !== "admin") {
+                throw new Error("Unauthorized access");
+            }
+
+            set({
+                isAuthenticated: true,
+                user,
+                error: null,
+                isLoading: false,
+            });
+        } catch (error) {
+            set({ error: error.response?.data?.message || "Error logging in as admin", isLoading: false });
             throw error;
         }
     },

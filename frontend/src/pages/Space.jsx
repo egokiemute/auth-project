@@ -5,7 +5,8 @@ import { formatDate } from "../utils/date";
 const Space = () => {
   const { user, logout } = useAuthStore();
   const ninStatus = user.isNinVerified;
-  console.log(ninStatus)
+  console.log(user)
+  console.log("user")
 
   const handleLogout = () => {
     logout();

@@ -1,28 +1,91 @@
-import React from 'react';
-import ListingItem from '../components/ListingItem';
+import React from "react";
+import ListingItem from "../components/ListingItem";
 
-const listingData = {
-    id: "1",
-    images: [
-      "/space-one.png",
-      "/space-one.png",
-      "/space-one.png",
-    ],
+const listingData = [
+  {
+    id: "9862682972",
+    images: ["/space-one.png", "/space-one.png", "/space-one.png"],
     title: "Spacious 2 Story House",
+    slug: "spacious-2-story-house",
     location: "Warri, Delta State",
-    rating: 3.5,
+    rating: 3.6,
     reviewsCount: 23,
     price: 2000,
-    description: "Welcome to EPIC House located in Peoria AZ. This stunning and modern 3800...",
-  };
+    description:
+      "Welcome to EPIC House located in Peoria AZ. This stunning and modern 3800...",
+  },
+  {
+    id: "13226252",
+    images: ["/space-one.png", "/space-one.png", "/space-one.png"],
+    title: "Fillup Story House",
+    slug: "spacious-2-story-house",
+    location: "Warri, Delta State",
+    rating: 4,
+    reviewsCount: 23,
+    price: 2000,
+    description:
+      "Welcome to EPIC House located in Peoria AZ. This stunning and modern 3800...",
+  },
+  {
+    id: "13226252",
+    images: ["/space-one.png", "/space-one.png", "/space-one.png"],
+    title: "Fillup Story House",
+    slug: "spacious-2-story-house",
+    location: "Warri, Delta State",
+    rating: 4,
+    reviewsCount: 23,
+    price: 2000,
+    description:
+      "Welcome to EPIC House located in Peoria AZ. This stunning and modern 3800...",
+  },
+  {
+    id: "13226252",
+    images: ["/space-one.png", "/space-one.png", "/space-one.png"],
+    title: "Fillup Story House",
+    slug: "spacious-2-story-house",
+    location: "Warri, Delta State",
+    rating: 4,
+    reviewsCount: 23,
+    price: 2000,
+    description:
+      "Welcome to EPIC House located in Peoria AZ. This stunning and modern 3800...",
+  },
+  {
+    id: "13226252",
+    images: ["/space-one.png", "/space-one.png", "/space-one.png"],
+    title: "Fillup Story House",
+    slug: "spacious-2-story-house",
+    location: "Warri, Delta State",
+    rating: 4,
+    reviewsCount: 23,
+    price: 2000,
+    description:
+      "Welcome to EPIC House located in Peoria AZ. This stunning and modern 3800...",
+  },
+  {
+    id: "13226252",
+    images: ["/space-one.png", "/space-one.png", "/space-one.png"],
+    title: "Fillup Story House",
+    slug: "spacious-2-story-house",
+    location: "Warri, Delta State",
+    rating: 4,
+    reviewsCount: 23,
+    price: 2000,
+    description:
+      "Welcome to EPIC House located in Peoria AZ. This stunning and modern 3800...",
+  },
+];
 
 const Search = () => {
   return (
-    <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <ListingItem listing={listingData} />
-      {/* Additional ListingItem components for more listings */}
+    <div className="container py-12">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {listingData.map((listings, idx) => (
+          <ListingItem listing={listings} key={idx} />
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;

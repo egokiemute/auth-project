@@ -1,20 +1,26 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Carousel from "./Carousel";
 import StarRating from "./StarRating";
 import { Heart } from "lucide-react";
 
 const ListingItem = ({ listing }) => {
+  // const navigate = useNavigate();
+  // const goToTabDetail = (id) => {
+  //   navigate(`/tab/${id}`);
+  // };
+
   return (
-    <div className="w-full max-w-xs mx-auto bg-white rounded-lg shadow-lg overflow-hidden relative">
+    <div className="w-full max-w-xs mx-auto bg-white rounded-lg shadow-sm overflow-hidden relative">
       {/* Image Carousel */}
       <div className="relative">
-        <Carousel images={listing.images || ["/default.jpg"]} /> {/* Default image if none provided */}
-        <button className="absolute top-3 right-3 bg-white rounded-full p-1 shadow-lg">
-          <Heart className="text-gray-500 hover:text-red-500" />
+        <Carousel images={listing.images || ["/default.jpg"]} />{" "}
+        {/* Default image if none provided */}
+        <button className="absolute top-3 right-3 bg-[#2c2c2c70] rounded-full p-1 shadow-lg">
+          <Heart className="size-5 text-white hover:text-gray-200 transition-all ease-in-out duration-500" />
         </button>
         {/* Price Badge */}
-        <div className="absolute bottom-3 left-3 bg-white px-3 py-1 rounded-lg text-gray-800 font-semibold">
+        <div className="absolute bottom-3 right-0 bg-white px-3 py-1 rounded-lg rounded-r-none text-gray-800 font-semibold">
           ₦{listing.price}
         </div>
       </div>
@@ -26,14 +32,16 @@ const ListingItem = ({ listing }) => {
         <div className="flex items-center gap-1 text-sm my-2">
           <StarRating rating={listing.rating} />
           <span className="font-semibold">{listing.rating}</span>
-          <span className="text-gray-500">({listing.reviewsCount} reviews)</span>
+          <span className="text-[#803EC2] underline text-[14px]">
+            ({listing.reviewsCount} reviews)
+          </span>
         </div>
-        <p className="text-sm text-gray-700 line-clamp-2">
+        <p className="text-sm text-[#000000A3] line-clamp-2">
           {listing.description}
         </p>
         <Link
-          to={`/listing/${listing.id}`}
-          className="text-blue-600 mt-2 inline-block"
+          to={`/tab/${listing.id}`}
+          className="text-[#000000E5] font-bold mt-2 inline-block"
         >
           Available for Reservation
         </Link>

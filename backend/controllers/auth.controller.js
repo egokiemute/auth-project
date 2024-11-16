@@ -181,32 +181,58 @@ export const login = async (req, res) => {
     try {
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({ success: false, message: "Invalid credentials" });
+            return res.status(400).json({ success: false, message: "No account was found connected to this email" });
         }
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        const isPasswordValid = bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             return res.status(400).json({ success: false, message: "Invalid credentials" });
         }
 
+        // Generate token and set it as a cookie
         generateTokenAndSetCookie(res, user._id);
 
+        // Update last login time
         user.lastLogin = new Date();
         await user.save();
 
+        // Send response including user role
         res.status(200).json({
             success: true,
             message: "Logged in successfully",
             user: {
                 ...user._doc,
                 password: undefined,
-            }
-        })
+            },
+        });
 
     } catch (error) {
         console.log("Error in logging in: ", error);
-        res.status(400).json({ success: false, message: error.message });
+        res.status(500).json({ success: false, message: "Internal server error" });
     }
 };
+
+export const loginAdmin = async (req, res) => {
+    const { email, password } = req.body;
+  
+    // Check if admin exists and verify credentials
+    const admin = await User.findOne({ email, role: "admin" }); // Assuming 'role' field defines user type
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+  
+    const isMatch = await bcrypt.compare(password, admin.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+  
+    const token = jwt.sign({ id: admin._id, role: admin.role }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+  
+    res.status(200).json({ token });
+  };
+
 
 export const logout = async (req, res) => {
     res.clearCookie("token");

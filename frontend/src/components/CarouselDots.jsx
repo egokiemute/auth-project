@@ -2,7 +2,7 @@ import React from "react";
 
 const CarouselDots = ({ count, currentIndex }) => {
   return (
-    <div className="absolute bottom-3 right-3 flex gap-1">
+    <div className="absolute bottom-3 inset-x-0 translate-x-[50%] flex gap-1">
       {Array.from({ length: count }).map((_, index) => (
         <span
           key={index}

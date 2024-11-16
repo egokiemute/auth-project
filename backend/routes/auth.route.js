@@ -1,5 +1,5 @@
 import express from "express";
-import { login, logout, register, googleAuth, verifyEmail, forgotPassword, resetPassword, checkAuth, initiate } from "../controllers/auth.controller.js";
+import { login, logout, register, googleAuth, verifyEmail, forgotPassword, resetPassword, checkAuth, initiate, loginAdmin } from "../controllers/auth.controller.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 import { verifyAdminToken } from "../middleware/verifyAdminToken.js";
 import { createSpace } from "../controllers/space.controller.js";
@@ -17,6 +17,7 @@ router.post("/register", register);
 router.post("/google", googleAuth);
 
 router.post("/login", login);
+router.post("/admin-login", loginAdmin);
 router.post("/logout", logout);
 
 router.post("/verify-email", verifyEmail);

@@ -71,7 +71,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex items-center justify-center pt-12 flex-col gap-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
