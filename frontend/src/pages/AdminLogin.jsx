@@ -10,13 +10,12 @@ const AdminLogin = () => {
 
     const handleAdminLogin = async (e) => {
         e.preventDefault();
-        setError(null);
 
         try {
             await adminLogin(email, password);
             navigate("/admin-dashboard");
         } catch (err) {
-            setError(err.message || "Something went wrong");
+            console.log(err.message || "Something went wrong");
         }
     };
 
@@ -45,7 +44,7 @@ const AdminLogin = () => {
                         required
                     />
                 </div>
-                <button type="submit" className="w-full p-2 bg-blue-600 text-white rounded">
+                <button type="submit" className="w-full p-2 bg-black text-white rounded">
                     Login
                 </button>
             </form>

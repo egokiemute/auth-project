@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.13.1",
+    "@cloudinary/url-gen": "^1.21.0",
     "@react-oauth/google": "^0.12.1",
     "@tailwindcss/forms": "^0.5.9",
     "auth-project": "file:..",

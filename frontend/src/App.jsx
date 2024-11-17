@@ -16,6 +16,8 @@ import Search from "./pages/Search";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin";
 import TabDetail from "./components/TabDetail";
+import Settings from "./pages/Settings";
+// import { Settings } from "lucide-react";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children, requiredRole }) => {
@@ -65,6 +67,22 @@ function App() {
           <Route path="/tab/:id" element={<TabDetail />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/admin-dashboard"
             element={
               <ProtectedRoute requiredRole="admin">
@@ -80,6 +98,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/register"
             element={

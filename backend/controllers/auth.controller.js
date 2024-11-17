@@ -214,25 +214,28 @@ export const login = async (req, res) => {
 
 export const loginAdmin = async (req, res) => {
     const { email, password } = req.body;
-  
-    // Check if admin exists and verify credentials
-    const admin = await User.findOne({ email, role: "admin" }); // Assuming 'role' field defines user type
-    if (!admin) {
-      return res.status(404).json({ message: "Admin not found" });
-    }
-  
-    const isMatch = await bcrypt.compare(password, admin.password);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-  
-    const token = jwt.sign({ id: admin._id, role: admin.role }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
-  
-    res.status(200).json({ token });
-  };
 
+    // Check if admin exists and verify credentials
+    const user = await User.findOne({ email, role: "admin" }); // Assuming 'role' field defines user type
+    if (!user) {
+        return res.status(404).json({ message: "Admin not found" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+        return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+
+    res.status(200).json({
+        success: true,
+        message: "Logged in successfully",
+        user: {
+            ...user._doc,
+            password: undefined,
+        },
+    });
+};
 
 export const logout = async (req, res) => {
     res.clearCookie("token");
@@ -319,6 +322,45 @@ export const checkAuth = async (req, res) => {
         res.status(200).json({ success: true, user });
     } catch (error) {
         console.log("Error in checkAuth ", error);
+        res.status(400).json({ success: false, message: error.message });
+    }
+};
+
+// UPDATE PROFILE
+export const updateUser = async (req, res) => {
+    const { dob, phone } = req.body;
+    const userId = req.params; // Assuming `req.userId` is set from middleware like authentication.
+
+    try {
+        // Validate required fields
+        if (!dob && !phone) {
+            throw new Error("No fields provided for update.");
+        }
+
+        // Find the user by ID
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found." });
+        }
+
+        // Update fields only if provided
+        if (phone) user.phone = phone;
+        if (dob) user.dob = dob;
+
+        // Save the updated user
+        await user.save();
+
+        // Respond with the updated user details
+        res.status(200).json({
+            success: true,
+            message: "User updated successfully.",
+            user: {
+                ...user._doc,
+                password: undefined, // Ensure the password is not included in the response
+            },
+        });
+    } catch (error) {
+        console.error("Error in updateUser: ", error);
         res.status(400).json({ success: false, message: error.message });
     }
 };

@@ -38,3 +38,20 @@ export const createTab = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error" });
     }
 };
+
+export const fetchAllTabs = async (req, res) => {
+    try {
+        // Fetch all tabs and populate the 'space' field to include associated space details
+        const tabs = await Tab.find().populate('space', 'name location'); // Populate only specific fields from the 'space' model (e.g., name, location)
+
+        // Check if no tabs are found
+        if (tabs.length === 0) {
+            return res.status(404).json({ success: false, message: "No tabs found" });
+        }
+
+        res.status(200).json({ success: true, tabs });
+    } catch (error) {
+        console.error("Error in fetchAllTabs:", error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+};
