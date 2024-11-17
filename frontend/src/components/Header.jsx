@@ -166,7 +166,7 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             {isLogin && (
               <Link
-                className="bg-black py-2 px-5 rounded-lg text-sm font-semibold text-white flex items-center justify-center shadow-md"
+                className="bg-black py-2 px-5 rounded-lg text-sm font-semibold text-white flex items-center justify-center"
                 to="/register"
               >
                 Sign up
@@ -174,7 +174,7 @@ const Header = () => {
             )}
             {isSignup && (
               <Link
-                className="bg-transparent border-solid border-[2px] px-4 py-1 text-center border-[#00000066] rounded-lg text-black font-semibold flex items-center justify-center shadow-md"
+                className="bg-transparent border-solid border-[2px] px-4 py-1 text-center border-[#00000066] rounded-lg text-black font-semibold flex items-center justify-center"
                 to="/login"
               >
                 Log in
@@ -183,13 +183,13 @@ const Header = () => {
             {!neitherPage.includes(location.pathname) && (
               <div className="flex items-center gap-4">
                 <Link
-                  className="bg-transparent border-solid border-[2px] px-4 py-1 text-center border-[#00000066] rounded-lg text-black font-semibold flex items-center justify-center shadow-md"
+                  className="bg-transparent border-solid border-[2px] px-4 py-1 text-center border-[#00000066] rounded-lg text-black font-semibold flex items-center justify-center"
                   to="/login"
                 >
                   Log in
                 </Link>
                 <Link
-                  className="bg-black py-2 px-5 rounded-lg text-sm font-semibold text-white flex items-center justify-center shadow-md"
+                  className="bg-black py-2 px-5 rounded-lg text-sm font-semibold text-white flex items-center justify-center"
                   to="/register"
                 >
                   Sign up
