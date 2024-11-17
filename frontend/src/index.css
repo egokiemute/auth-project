@@ -8,3 +8,27 @@
     mask-size: cover;
     -webkit-mask-size: cover;
   }
+
+  @layer utilities {
+  
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+  
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  
+    .no-visible-scrollbar {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+    }
+  
+    .no-visible-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+  }

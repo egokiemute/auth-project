@@ -69,7 +69,9 @@ const Header = () => {
   return (
     <div className="container font-acronym flex items-center justify-between py-4">
       <div className="flex items-center gap-6">
-        <img src="/logo.svg" alt="TabOS" />
+        <Link to="/">
+          <img src="/logo.svg" alt="TabOS" />
+        </Link>
         <form onSubmit={handleSearchSubmit} className="flex items-center gap-1">
           <button>
             <img
@@ -93,7 +95,7 @@ const Header = () => {
           <Link className="font-acronym" to="/spaces">
             Find a space
           </Link>
-          <Link to="reservations">My reservations</Link>
+          {user && <Link to="reservations">My reservations</Link>}
         </ul>
 
         {user ? (

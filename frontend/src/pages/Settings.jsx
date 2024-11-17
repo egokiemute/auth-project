@@ -17,7 +17,7 @@ const Settings = () => {
   ];
 
   return (
-    <div className="container flex items-start gap-12 p-12">
+    <div className="container flex items-start gap-12 py-12">
       {/* Sidebar */}
       <div className="w-1/4 p-2 bg-white h-fit rounded-xl">
         <ul>

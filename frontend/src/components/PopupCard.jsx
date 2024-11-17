@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import React, { useState, useEffect } from "react";
 
-const PopupCard = ({ isOpen, onClose, children }) => {
+const PopupCard = ({ isOpen, onClose, children, heading, className }) => {
   // Disable scrolling on the background when the popup is open
   useEffect(() => {
     if (isOpen) {
@@ -20,19 +20,23 @@ const PopupCard = ({ isOpen, onClose, children }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Overlay */}
       <div
-        className="absolute inset-0 bg-black bg-opacity-20"
+        className="absolute inset-0 h-[100vh] bg-black bg-opacity-20"
         onClick={onClose}
       ></div>
 
       {/* Popup Card */}
-      <div className="relative z-10 w-full max-w-md p-6 bg-white rounded-lg">
-        {/* Close Icon */}
-        <button
-          className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
-          onClick={onClose}
-        >
-          <X className="size-6" />
-        </button>
+      <div className={`${className} z-10 w-full bg-white rounded-lg`}>
+        <div className="flex items-center gap-4 p-5">
+          {/* Close Icon */}
+          <button
+            className=" text-gray-500 hover:text-gray-800"
+            onClick={onClose}
+          >
+            <X className="size-6" />
+          </button>
+          <h1 className="text-xl font-semibold">{heading}</h1>
+        </div>
+        <div className="w-full h-[0.5px] border-[1px] border-[#0000001A]" />
 
         {/* Card Content */}
         <div>{children}</div>
