@@ -90,7 +90,7 @@ const Header = () => {
       </div>
       <div className="flex items-center gap-6">
         <ul className="flex items-center gap-4 text-[#000000A3] font-bold text-sm">
-          <Link className="font-acronym" to="/search">
+          <Link className="font-acronym" to="/spaces">
             Find a space
           </Link>
           <Link to="reservations">My reservations</Link>

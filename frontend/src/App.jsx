@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import Space from "./pages/Space";
+import Spaces from "./pages/Spaces";
 import LoadingSpinner from "./components/LoadingSpinner";
 
 import { Toaster } from "react-hot-toast";
@@ -64,6 +65,7 @@ function App() {
         <Routes>
           <Route path="/" element={"Homepage"} />
           <Route path="/search" element={<Search />} />
+          <Route path="/spaces" element={<Spaces />} />
           <Route path="/tab/:id" element={<TabDetail />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route
