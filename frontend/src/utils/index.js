@@ -10,7 +10,7 @@ export const useCloudinaryUpload = () => {
 
     try {
       const response = await axios.post(
-        `cloudinary://371669268212135:ONW5jYpmjAoQjTXGUFGn9ih8ldo@kodenigga/image/upload`, // Replace with your Cloudinary endpoint
+        `${CLOUDINARY_URL}@kodenigga/image/upload`, // Replace with your Cloudinary endpoint
         formData
       );
       console.log(response.data.secure_url)
