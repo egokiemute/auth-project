@@ -15,17 +15,17 @@ import {
 
 const Header = () => {
   const location = useLocation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { user, logout } = useAuthStore();
 
   const neitherPage = ["/register", "/login"];
 
   const isLogin = location.pathname === "/login";
   const isSignup = location.pathname === "/register";
-  console.log(user);
+  // console.log(user);
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
   const popupRef = useRef(null);
 
   // Toggle popup on profile image click
@@ -50,21 +50,21 @@ const Header = () => {
     visible: { opacity: 1, scale: 1 },
   };
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set("searchTerm", searchTerm);
-    const searchQuery = urlParams.toString();
-    navigate(`/search?${searchQuery}`);
-  };
+  // const handleSearchSubmit = (e) => {
+  //   e.preventDefault();
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   urlParams.set("searchTerm", searchTerm);
+  //   const searchQuery = urlParams.toString();
+  //   navigate(`/search?${searchQuery}`);
+  // };
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const searchTermFromUrl = urlParams.get("searchTerm");
-    if (searchTermFromUrl) {
-      setSearchTerm(searchTermFromUrl);
-    }
-  }, [location.search]);
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(location.search);
+  //   const searchTermFromUrl = urlParams.get("searchTerm");
+  //   if (searchTermFromUrl) {
+  //     setSearchTerm(searchTermFromUrl);
+  //   }
+  // }, [location.search]);
 
   return (
     <div className="container font-acronym flex items-center justify-between py-4">
@@ -72,7 +72,7 @@ const Header = () => {
         <Link to="/">
           <img src="/logo.svg" alt="TabOS" />
         </Link>
-        <form onSubmit={handleSearchSubmit} className="flex items-center gap-1">
+        {/* <form onSubmit={handleSearchSubmit} className="flex items-center gap-1">
           <button>
             <img
               src="/search-icon.svg"
@@ -88,7 +88,7 @@ const Header = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-        </form>
+        </form> */}
       </div>
       <div className="flex items-center gap-6">
         <ul className="flex items-center gap-4 text-[#000000A3] font-bold text-sm">
