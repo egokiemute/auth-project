@@ -13,13 +13,16 @@ export default {
         primary: {
           DEFAULT: "#000000",
           white: "#FFFFFF",
-          border: "#000000",  // primary border color
+          border: "#000000", // primary border color
         },
-        background: "#FAFAFA",  // website background color
+        background: "#FAFAFA", // website background color
       },
       container: {
         center: true,
         padding: "8rem",
+      },
+      backgroundImage: {
+        'hero-banner': "url('/assets/hero-banner.webp')", // Path relative to the public folder
       },
     },
   },
@@ -27,4 +30,4 @@ export default {
     require("@tailwindcss/forms"),
     require("tailwindcss-hero-patterns"),
   ],
-}
+};

@@ -6,6 +6,7 @@ const listingData = [
   {
     id: "9862682972",
     images: ["/space-one.png", "/space-one.png", "/space-one.png"],
+    amenities: ["Wifi", "Kitchen", "Free snacks"],
     title: "Spacious 2 Story House",
     slug: "spacious-2-story-house",
     location: "Warri, Delta State",
@@ -18,6 +19,7 @@ const listingData = [
   {
     id: "13226252",
     images: ["/space-one.png", "/space-one.png", "/space-one.png"],
+    amenities: ["Wifi", "Kitchen", "Rest room"],
     title: "Fillup Story House",
     slug: "spacious-2-story-house",
     location: "Warri, Delta State",
@@ -30,6 +32,7 @@ const listingData = [
   {
     id: "13226252",
     images: ["/space-one.png", "/space-one.png", "/space-one.png"],
+    amenities: ["Wifi", "Kitchen", "Free snacks"],
     title: "Fillup Story House",
     slug: "spacious-2-story-house",
     location: "Warri, Delta State",
@@ -42,6 +45,7 @@ const listingData = [
   {
     id: "13226252",
     images: ["/space-one.png", "/space-one.png", "/space-one.png"],
+    amenities: ["Wifi", "Electricity", "Rest room"],
     title: "Fillup Story House",
     slug: "spacious-2-story-house",
     location: "Warri, Delta State",
@@ -54,6 +58,7 @@ const listingData = [
   {
     id: "13226252",
     images: ["/space-one.png", "/space-one.png", "/space-one.png"],
+    amenities: ["Wifi", "Kitchen", "Rest room"],
     title: "Fillup Story House",
     slug: "spacious-2-story-house",
     location: "Warri, Delta State",
@@ -66,6 +71,7 @@ const listingData = [
   {
     id: "13226252",
     images: ["/space-one.png", "/space-one.png", "/space-one.png"],
+    amenities: ["Wifi", "Kitchen", "Rest room"],
     title: "Fillup Story House",
     slug: "spacious-2-story-house",
     location: "Warri, Delta State",

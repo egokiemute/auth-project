@@ -19,6 +19,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin";
 import TabDetail from "./components/TabDetail";
 import Settings from "./pages/Settings";
+import Home from "./pages/Home";
 // import { Settings } from "lucide-react";
 
 // protect routes that require authentication
@@ -64,7 +65,7 @@ function App() {
     <AppLayout>
       <div className="min-h-screen bg-[#FAFAFA] relative overflow-hidden">
         <Routes>
-          <Route path="/" element={"Homepage"} />
+          <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/spaces" element={<Spaces />} />
           <Route path="/reservations" element={<MyReservations />} />
