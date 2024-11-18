@@ -6,7 +6,7 @@ import Input from "./Input";
 const Footer = () => {
   return (
     <div className="container font-acronym flex flex-col items-center justify-between py-20 bg-[#000000E5]">
-      <div className="flex items-start justify-between w-full gap-20 pb-16">
+      <div className="flex items-start justify-between w-full gap-20 pb-16 pt-12">
         <img src="/logo-white.svg" alt="TabOS" />
         <div className="flex items-start gap-10">
           <div className="flex flex-col items-start gap-3">
