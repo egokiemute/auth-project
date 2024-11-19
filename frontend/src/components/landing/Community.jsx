@@ -18,7 +18,7 @@ const Community = () => {
   };
 
   return (
-    <div className="bg-white container px-12 py-32">
+    <div className="bg-white container px-12 pb-32">
       <div className="max-w-7xl mx-auto">
         {/* Core Community Section */}
         <motion.div
