@@ -4,7 +4,7 @@ import Space from '../models/space.model.js';
 export const createTab = async (req, res) => {
     try {
         // Extract data from the request body
-        const { space, name, description, capacity, amenities, price, images } = req.body;
+        const { space, name, description, capacity, amenities, city, state, street, price, images } = req.body;
 
         // Check if spaceId is provided
         if (!space) {
@@ -19,6 +19,9 @@ export const createTab = async (req, res) => {
             capacity,
             amenities,
             price,
+            city,
+            state,
+            street,
             images
         });
 
@@ -35,17 +38,19 @@ export const createTab = async (req, res) => {
         res.status(201).json({ success: true, tab: savedTab });
     } catch (error) {
         console.error("Error in createTab:", error);
-        res.status(500).json({ success: false, message: "Server error" });
+        res.status(500).json({ success: false, message: "Server errror" });
     }
 };
 
 export const fetchAllTabs = async (req, res) => {
     try {
-        // Fetch all tabs and populate the 'space' field to include associated space details
-        const tabs = await Tab.find().populate('space', 'name location'); // Populate only specific fields from the 'space' model (e.g., name, location)
+        console.log("Fetching all tabs...");
 
-        // Check if no tabs are found
-        if (tabs.length === 0) {
+        const tabs = await Tab.find().populate('space', 'name location');
+        console.log("Tabs fetched:", tabs);
+
+        if (!tabs || tabs.length === 0) {
+            console.log("No tabs found.");
             return res.status(404).json({ success: false, message: "No tabs found" });
         }
 
@@ -55,3 +60,16 @@ export const fetchAllTabs = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error" });
     }
 };
+
+export const getTab = async (req, res) => {
+    try {
+      const tab = await Tab.findById(req.params.id);
+      if (!tab) {
+        return res.status(404).json({ success: false, message: "Tab found" });
+      }
+      res.status(200).json({ success: true, tab });
+    } catch (error) {
+      next(error);
+    }
+  };
+

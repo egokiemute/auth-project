@@ -19,8 +19,8 @@ const Benefits = () => {
   };
 
   return (
-    <div className="bg-white container px-12 py-32">
-      <div className="max-w-7xl mx-auto">
+    <div className="bg-white py-32">
+      <div className="container max-w-7xl mx-auto">
         {/* Core Benefits Section */}
         <motion.div
           className="flex flex-col gap-4 items-center justify-center mb-20"
@@ -29,7 +29,7 @@ const Benefits = () => {
           viewport={{ once: true, amount: 0.2 }}
           variants={staggerContainer}
         >
-          <motion.h2 className="text-4xl font-bold mb-8" variants={fadeIn}>
+          <motion.h2 className="text-5xl font-bold mb-8" variants={fadeIn}>
             Core benefits
           </motion.h2>
           <motion.div
@@ -76,7 +76,7 @@ const Benefits = () => {
           viewport={{ once: true, amount: 0.2 }}
           variants={staggerContainer}
         >
-          <motion.h2 className="text-4xl font-bold" variants={fadeIn}>
+          <motion.h2 className="text-5xl font-bold" variants={fadeIn}>
             Key differentiators
           </motion.h2>
           <motion.div className="grid grid-cols-4 gap-8" variants={staggerContainer}>
@@ -89,7 +89,7 @@ const Benefits = () => {
                 <div className={`border p-4 rounded-full ${index === 0 ? "border-[#CC3B3129]" : index === 1 ? "border-[#803EC233]" : index === 2 ? "border-[#A3761A33]" : "border-[#027A4833]"}`}>
                   <Icon className={`${index === 0 ? "text-[#CC3B31B8]" : index === 1 ? "text-[#803EC2B8]" : index === 2 ? "text-[#A3761AB8]" : "text-[#027A48B8]"} size-8`} />
                 </div>
-                <h3 className="font-bold text-2xl">
+                <h3 className="font-bold text-xl">
                   {index === 0
                     ? "Fuel your network"
                     : index === 1

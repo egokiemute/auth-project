@@ -3,7 +3,7 @@ import { login, logout, register, googleAuth, verifyEmail, forgotPassword, reset
 import { verifyToken } from "../middleware/verifyToken.js";
 import { verifyAdminToken } from "../middleware/verifyAdminToken.js";
 import { createSpace } from "../controllers/space.controller.js";
-import { createTab, fetchAllTabs } from "../controllers/tabs.controller.js";
+import { createTab, fetchAllTabs, getTab } from "../controllers/tabs.controller.js";
 
 const router = express.Router();
 
@@ -34,5 +34,6 @@ router.post("/create", verifyAdminToken, createSpace);
 // Tabs Routes
 router.post("/create-tab", verifyAdminToken, createTab)
 router.get("/tabs", fetchAllTabs);
+router.get("/tab/:id", getTab);
 
 export default router;

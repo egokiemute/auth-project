@@ -38,7 +38,7 @@ const spaceSchema = new mongoose.Schema({
     },
     tabs: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tab', // This references the Tab model which we'll define next
+        ref: 'Tab',
     }],
     createdAt: {
         type: Date,

@@ -20,7 +20,7 @@ const PopupCard = ({ isOpen, onClose, children, heading, className }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Overlay */}
       <div
-        className="absolute inset-0 h-[100vh] bg-black bg-opacity-20"
+        className="absolute inset-0 h-[100vh] bg-[#00000066]"
         onClick={onClose}
       ></div>
 
@@ -32,7 +32,7 @@ const PopupCard = ({ isOpen, onClose, children, heading, className }) => {
             className=" text-gray-500 hover:text-gray-800"
             onClick={onClose}
           >
-            <X className="size-6" />
+            <X className="size-4 text-[#00000066]" />
           </button>
           <h1 className="text-xl font-semibold">{heading}</h1>
         </div>

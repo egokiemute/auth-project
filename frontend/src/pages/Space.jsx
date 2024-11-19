@@ -3,11 +3,14 @@ import { useAuthStore } from "../store/authStore";
 import { formatDate } from "../utils/date";
 import { Bell, SlidersVertical, Smile, User, Users } from "lucide-react";
 import { Link } from "react-router-dom";
+// import { useTabsStore } from "../store/tabStore";
 
 const Space = () => {
   const { user, logout } = useAuthStore();
+
   const ninStatus = user.isNinVerified;
   console.log(user);
+  // console.log(fetchAllTabs);
   console.log("user");
 
   const handleLogout = () => {
@@ -26,7 +29,7 @@ const Space = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.5 }}
-              className="max-w-md w-full mt-10 p-4 bg-white rounded-xl border-[1px] border-[#0000001A]"
+              className="max-w-md w-full h-[200px] mt-10 p-4 bg-white rounded-xl border-[1px] border-[#0000001A]"
             >
               <div className="border border-[#00000066] p-2 rounded-full w-fit mb-6">
                 <User className="text-[#00000066] size-5" />
@@ -46,7 +49,7 @@ const Space = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.5 }}
-              className="max-w-md w-full mt-10 p-4 bg-white rounded-xl border-[1px] border-[#0000001A]"
+              className="max-w-md w-full h-[200px] mt-10 p-4 bg-white rounded-xl border-[1px] border-[#0000001A]"
             >
               <div className="border border-[#00000066] p-2 rounded-full w-fit mb-6">
                 <Bell className="text-[#00000066] size-5" />
@@ -66,7 +69,7 @@ const Space = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.5 }}
-              className="max-w-md w-full mt-10 p-4 bg-white rounded-xl border-[1px] border-[#0000001A]"
+              className="max-w-md w-full h-[200px] mt-10 p-4 bg-white rounded-xl border-[1px] border-[#0000001A]"
             >
               <div className="border border-[#00000066] p-2 rounded-full w-fit mb-6">
                 <SlidersVertical className="text-[#00000066] size-5" />

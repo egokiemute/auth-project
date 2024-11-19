@@ -44,7 +44,7 @@ const ResetPasswordPage = () => {
       className="flex items-center justify-center pt-12 max-w-md w-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden"
     >
       <div className="p-8">
-        <h2 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-green-400 to-emerald-500 text-transparent bg-clip-text">
+        <h2 className="text-4xl font-bold mb-6 text-center bg-black">
           Reset Password
         </h2>
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
@@ -74,7 +74,7 @@ const ResetPasswordPage = () => {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full py-3 px-4 bg-black text-white font-bold rounded-lg shadow-lg focus:outline-none focus:ring-2 transition duration-200"
+            className="w-full py-3 px-4 bg-black text-white font-bold rounded-lg focus:outline-none focus:ring-2 transition duration-200"
             type="submit"
             disabled={isLoading}
           >

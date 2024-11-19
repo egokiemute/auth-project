@@ -1,11 +1,7 @@
 import mongoose from 'mongoose';
 
 const tabSchema = new mongoose.Schema({
-    space: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Space',
-        required: true,
-    },
+    space: { type: mongoose.Schema.Types.ObjectId, ref: 'Space', required: true },
     name: {
         type: String,
         required: true,
@@ -13,12 +9,21 @@ const tabSchema = new mongoose.Schema({
     description: {
         type: String,
     },
+    city: {
+        type: String,
+    },
+    state: {
+        type: String,
+    },
+    street: {
+        type: String,
+    },
     capacity: {
         type: Number, // Number of people the tab can accommodate
     },
     amenities: [{
         type: String,
-        enum: ["wifi", "ac", "projector", "printer", "cafe", "parking", "whiteboard", "power backup", "locker storage"],
+        enum: ["wifi", "ac", "projector", "printer", "cafe", "parking", "whiteboard", "power backup", "smart tv", "locker storage"],
     }],
     price: {
         type: Number, // Price per hour/day, depending on your needs

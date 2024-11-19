@@ -123,7 +123,7 @@ const Profile = ({ user }) => {
         </div>
 
         {/* Form Inputs */}
-        <div className="grid grid-cols-1">
+        <div className="grid grid-cols-1 gap-5">
           <div className="grid grid-cols-2 gap-4">
             <Input
               label="First Name"
@@ -159,12 +159,12 @@ const Profile = ({ user }) => {
               value={formData.nin}
                 onChange={null}
             />
-            {user?.isNinVerified ? (
-              <span className="absolute -top-1 left-[82px] bg-[#23a31a0a] border-[1px] border-[#28a31a33] px-2 py-1 text-xs font-bold rounded-xl text-[#1aa31f]">
+            {!user?.isNinVerified ? (
+              <span className="absolute -top-[2px] left-[90px] bg-[#23a31a0a] border-[1px] border-[#28a31a33] px-2 py-1 text-xs font-bold rounded-xl text-[#1aa31f]">
                 NIN verified
               </span>
             ) : (
-              <span className="absolute -top-1 left-[82px] bg-[#A3761A0A] border-[1px] border-[#A3761A33] px-2 py-1 text-xs font-bold rounded-xl text-[#A3761A]">
+              <span className="absolute -top-[2px] left-[90px] bg-[#A3761A0A] border-[1px] border-[#A3761A33] px-2 py-1 text-xs font-bold rounded-xl text-[#A3761A]">
                 Verification pending
               </span>
             )}

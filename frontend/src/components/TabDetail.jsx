@@ -1,38 +1,63 @@
 import {
-  Group,
   Heart,
-  Locate,
-  LocateIcon,
-  MapPin,
-  MapPinCheck,
-  PinOff,
   Share2,
+  MapPin,
   Users,
 } from "lucide-react";
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import StarRating from "./StarRating";
 import Input from "./Input";
+import { useAuthStore } from "../store/authStore";
 
 const TabDetail = () => {
-  const { id = "9862682972" } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [tab, setTab] = useState(null);
+  const params = useParams();
+  const { user } = useAuthStore();
 
-  // Mock data
-  const data = {
-    id: "9862682972",
-    images: ["/space-one.png", "/space-one.png", "/space-one.png"],
-    amenities: ["WiFi", "Light", "House", "Spacious"],
-    title: "Spacious 2 Story House",
-    slug: "spacious-2-story-house",
-    location: "Warri, Delta State",
-    rating: 3.6,
-    reviewsCount: 23,
-    price: 2000,
-    description:
-      "Welcome to EPIC House located in Peoria AZ. This stunning and modern 3800...",
-  };
+  useEffect(() => {
+    const fetchTab = async () => {
+      console.log("Params:", params);
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `https://usetabos-beta.onrender.com/api/auth/tab/${params.id}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch tab details");
+        }
+        console.log(response)
+
+        const data = await response.json();
+        console.log(data);
+        if (data.success) {
+          
+          setTab(data.tab); // Assuming the API returns the tab under `data.tab`
+        } else {
+          console.error("Error fetching tab:", data.message);
+        }
+      } catch (error) {
+        console.error("Error:", error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTab();
+  }, [params.id]);
+
+  if (loading) {
+    return <div className="text-center py-10">Loading tab details...</div>;
+  }
+
+  if (!tab) {
+    return <div className="text-center py-10">Tab details not found.</div>;
+  }
 
   return (
-    <div className="container p-6">
+    <div className="container pb-12">
       {/* Top Buttons */}
       <div className="pb-10">
         <div className="flex items-center justify-end py-4">
@@ -50,32 +75,20 @@ const TabDetail = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           {/* Main Image */}
           <img
-            src="/assets/space-two.png"
-            alt="space one"
+            src={tab.images?.[0] || "/assets/placeholder-image.png"}
+            alt={tab.name || "Tab"}
             className="object-cover h-[400px] w-full rounded-md"
           />
           {/* Small Images */}
           <div className="grid grid-cols-2 gap-1">
-            <img
-              src="/space-one.png"
-              alt="space one"
-              className="object-cover w-full h-[200px] rounded-md"
-            />
-            <img
-              src="/assets/space-three.png"
-              alt="space one"
-              className="object-cover w-full h-[200px] rounded-md"
-            />
-            <img
-              src="/assets/space-four.png"
-              alt="space one"
-              className="object-cover w-full h-[200px] rounded-md"
-            />
-            <img
-              src="/assets/space-five.png"
-              alt="space one"
-              className="object-cover w-full h-[200px] rounded-md"
-            />
+            {tab.images?.slice(1).map((image, idx) => (
+              <img
+                key={idx}
+                src={image || "/assets/placeholder-image.png"}
+                alt={`Tab Image ${idx + 2}`}
+                className="object-cover w-full h-[200px] rounded-md"
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -84,63 +97,74 @@ const TabDetail = () => {
       <div className="flex flex-col lg:flex-row items-start justify-between gap-6">
         {/* Title and Description */}
         <div className="lg:w-1/2">
-          <h1 className="text-3xl font-bold">{data.title}</h1>
+          <h1 className="text-5xl font-bold mt-1">{tab.name}</h1>
           <div className="py-3 flex items-center gap-3">
-            <div className="flex items-center gap-3">
-              <StarRating rating={data.rating} />
-              <span className="font-semibold">{data.rating}</span>
+            {/* <div className="flex items-center gap-3">
+              <StarRating rating={tab.rating || 0} />
+              <span className="font-semibold">{tab.rating || "N/A"}</span>
               <span className="text-[#803EC2] underline text-[14px]">
-                ({data.reviewsCount} reviews)
+                ({tab.reviewsCount || 0} reviews)
+              </span>
+            </div> */}
+            <div className="flex items-center gap-2">
+              <div className="border border-[#00000066] p-2 rounded-full">
+                <MapPin className="text-[#00000066] size-5" />
+              </div>
+              <span className="text-[#000000A3] text-xl">
+                {`${tab.city}, ${tab.state}`}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="border border-gray-300 p-2 rounded-full">
-                <MapPin className="text-[#000000A3] size-5" />
+              <div className="border border-[#00000066] p-2 rounded-full">
+                <Users className="text-[#00000066] size-5" />
               </div>
-              <span className="text-[#000000A3]">{data.location}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="border border-gray-300 p-2 rounded-full">
-                <Users className="text-[#000000A3] size-5" />
-              </div>
-              <span className="text-[#000000A3]">42 Creatives</span>
+              <span className="text-[#000000A3] text-xl">
+                {tab.capacity || "N/A"} Creatives
+              </span>
             </div>
           </div>
-          <div className="flex flex-col gap-1 items-start pb-2">
-            <h1>Amenities</h1>
+          <div className="flex flex-col gap-1 items-start border-b border-[#0000001A] pb-10">
+            <h1 className="text-[#000000E5] text-xl mb-2 font-medium">Included in your reservation</h1>
             <div className="space-x-2">
-              {data.amenities.map((amenity) => (
-                <span className="text-xs px-3 py-1 rounded-md border-[1px] border-[#545454a3]">
-                  {amenity}
+              {tab.amenities.map((amenity, idx) => (
+                <span
+                  key={idx}
+                  className="px-3 py-2 text-[#000000E5] text-sm rounded-md border-[1px] border-[#0000001A]"
+                >
+                  {amenity.replace(/\b\w/g, (char) => char.toUpperCase())}
                 </span>
               ))}
             </div>
           </div>
-          <p className="text-gray-500 mt-2">{data.description}</p>
+          <p className="text-[#000000A3] text-xl pt-4">{tab.description}</p>
         </div>
 
         {/* Reservation Form */}
         <div className="lg:w-1/3 bg-[#803EC20A] p-10 rounded-lg">
-          <div className="flex flex-col items-center justify-center gap-2">
-            <h1 className="text-gray-700 font-bold text-lg">₦2000</h1>
-            <span className="text=-[#000000A3]  text-sm">All day access</span>
+          <div className="flex flex-col items-center justify-center gap-2 mb-4">
+            <h1 className="text-gray-700 font-bold text-2xl">
+              ₦{tab.price.toLocaleString()}
+            </h1>
+            <span className="text-[#000000A3] text-sm">All day access</span>
           </div>
-          <div className="w-full">
+          <form className="w-full space-y-4">
             <Input label="Date" type="date" />
             <Input label="Arrival Time" type="time" />
-            <Input label="Guest" placeholder="1 - No. of guest(s)" type="select" />
-            <p className="text-base font-bold -mt-4">
+            <Input
+              label="Guest"
+              placeholder="1 - No. of guest(s)"
+              type="select"
+            />
+            <p className="bg-white p-1 px-2 rounded-full border border-[#0000001A] w-fit text-sm font-bold -mt-10">
               Available for reservation
             </p>
             <button
-              className="mt-5 w-full py-3 px-4 bg-black text-white font-bold rounded-lg shadow-lg focus:outline-none transition duration-200"
+              className="mt-10 w-full py-3 px-4 bg-black text-white font-bold rounded-lg focus:outline-none transition duration-200"
               type="submit"
-              //   disabled={!email || isLoading}
             >
               Reserve
             </button>
-          </div>
-          {/* Add form or any placeholder for reservation here */}
+          </form>
         </div>
       </div>
     </div>

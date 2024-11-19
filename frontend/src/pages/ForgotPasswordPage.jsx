@@ -45,12 +45,13 @@ const ForgotPasswordPage = () => {
                 // placeholder="Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="mb-2"
                 required
               />
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-3 px-4 bg-black  text-white font-bold rounded-lg shadow-lg focus:outline-none transition duration-200"
+                className="w-full py-3 px-4 bg-black  text-white font-bold rounded-lg focus:outline-none transition duration-200"
                 type="submit"
               >
                 {isLoading ? (

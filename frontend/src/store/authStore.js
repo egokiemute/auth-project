@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 // const API_URL = "http://localhost:8000/api/auth"
 const API_URL = import.meta.env.MODE === "development" ? "http://localhost:8000/api/auth" : "/api/auth";
@@ -32,15 +31,6 @@ export const useAuthStore = create((set) => ({
             throw error;
         }
     },
-    fetchAllTabs: async () => {
-        try {
-            const response = await axios.get(`${API_URL}/tabs`);
-            set({ allTabs: response.data.tabs }); 
-        } catch (error) {
-            console.error("Error fetching tabs:", error);
-            set({ error: error.response?.data?.message || "Failed to fetch tabs" });
-        }
-    },
 
     signup: async (email, password, firstname, lastname, phone, nin) => {
         set({ isLoading: true, error: null });
@@ -67,6 +57,15 @@ export const useAuthStore = create((set) => ({
         } catch (error) {
             set({ error: error.response?.data?.message || "Error logging in", isLoading: false });
             throw error;
+        }
+    },
+    fetchAllTabs: async () => {
+        try {
+            const response = await axios.get(`${API_URL}/tabs`);
+            set({ allTabs: response.data.tabs }); 
+        } catch (error) {
+            console.error("Error fetching tabs:", error);
+            set({ error: error.response?.data?.message || "Failed to fetch tabs" });
         }
     },
     adminLogin: async (email, password) => {

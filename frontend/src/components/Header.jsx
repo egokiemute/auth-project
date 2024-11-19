@@ -7,6 +7,7 @@ import {
   House,
   LogOut,
   Settings,
+  SlidersVertical,
   Space,
   User,
   User2Icon,
@@ -67,7 +68,7 @@ const Header = () => {
   // }, [location.search]);
 
   return (
-    <div className="container font-acronym flex items-center justify-between py-4">
+    <div className="container font-acronym flex items-center justify-between py-2">
       <div className="flex items-center gap-6">
         <Link to="/">
           <img src="/logo.svg" alt="TabOS" />
@@ -124,40 +125,33 @@ const Header = () => {
                 ref={popupRef}
               >
                 <Link
-                  to="/space"
-                  className="flex items-center gap-1 px-4 py-3 text-gray-700 hover:bg-gray-100"
-                >
-                  <House className="w-5 h-5" />
-                  <span>Dashboard</span>
-                </Link>
-                <Link
                   to="/profile"
-                  className="flex items-center gap-1 px-4 py-3 text-gray-700 hover:bg-gray-100"
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100"
                 >
-                  <User className="w-5 h-5" />
-                  <span>View Profile</span>
+                  <User className="w-5 h-5 text-[#00000066]" />
+                  <span className="text-[#000000E5] text-sm">View profile</span>
                 </Link>
                 <Link
                   to="/settings"
-                  className="flex items-center gap-1 px-4 py-3 text-gray-700 hover:bg-gray-100"
+                  className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100"
                 >
-                  <Settings className="w-5 h-5" />
-                  <span>Settings</span>
+                  <SlidersVertical className="w-5 h-5 text-[#00000066]" />
+                  <span className="text-[#000000E5] text-sm">Preference</span>
                 </Link>
                 <div className="w-full bg-gray-200 h-[1px]" />
                 <Link
-                  to="/profile"
-                  className="flex items-center gap-1 px-4 py-3 text-gray-700 hover:bg-gray-100"
+                  to="/help"
+                  className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100"
                 >
-                  <CircleHelp className="w-5 h-5" />
-                  <span>Help</span>
+                  <CircleHelp className="w-5 h-5 text-[#00000066]" />
+                  <span className="text-[#000000E5] text-sm">Help</span>
                 </Link>
                 <button
                   onClick={logout}
-                  className="flex items-center gap-1 w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-100"
+                  className="flex items-center gap-3 w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-100"
                 >
-                  <LogOut className="w-5 h-5" />
-                  <span>Logout</span>
+                  <LogOut className="w-5 h-5 text-[#00000066]" />
+                  <span className="text-[#000000E5] text-sm">Logout</span>
                 </button>
               </motion.div>
             )}

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ListingItem from "../ListingItem";
 
 const listingData = [
@@ -59,6 +59,27 @@ const listingData = [
   
 
 const FeaturedSpaces = () => {
+  const [tabs, setTabs] = useState([]); // Initialize as an empty array
+
+useEffect(() => {
+  const fetchTabs = async () => {
+    try {
+      const res = await fetch(`https://usetabos-beta.onrender.com/api/auth/tabs`);
+      const data = await res.json();
+      if (data.success) {
+        // Limit the tabs array to the first three items
+        setTabs(data.tabs.slice(0, 3));
+      } else {
+        console.error("Failed to fetch tabs:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching tabs:", error);
+    }
+  };
+
+  fetchTabs();
+}, []);
+
   const fadeIn = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -75,8 +96,8 @@ const FeaturedSpaces = () => {
   };
 
   return (
-    <div className="bg-white container px-12 py-32">
-      <div className="max-w-7xl mx-auto">
+    <div className="bg-white py-32">
+      <div className=" container max-w-7xl mx-auto">
         {/* Core Community Section */}
         <motion.div
           className="flex flex-col gap-4 items-center justify-center mb-20"
@@ -86,7 +107,7 @@ const FeaturedSpaces = () => {
           variants={staggerContainer}
         >
           <motion.div className="flex flex-col text-center mb-6">
-            <h2 className="text-4xl font-bold mb-4" variants={fadeIn}>
+            <h2 className="text-5xl font-bold mb-4" variants={fadeIn}>
             Our most used spaces
             </h2>
           </motion.div>
@@ -94,10 +115,10 @@ const FeaturedSpaces = () => {
             className="grid grid-cols-4 gap-10"
             variants={staggerContainer}
           >
-            {listingData.map((listings, index) => (
+            {tabs.map((listings, index) => (
               <motion.div
                 key={index}
-                className="flex flex-col items-start gap-3"
+                className="flex flex-col items-start gap-3 w-[300px]"
                 variants={fadeIn}
               >
                 <ListingItem listing={listings} />

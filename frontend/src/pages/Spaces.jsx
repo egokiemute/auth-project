@@ -1,95 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ListingItem from "../components/ListingItem";
 import PopupCard from "../components/PopupCard";
 
-const listingData = [
-  {
-    id: "9862682972",
-    images: ["/space-one.png", "/space-one.png", "/space-one.png"],
-    amenities: ["Wifi", "Kitchen", "Free snacks"],
-    title: "Spacious 2 Story House",
-    slug: "spacious-2-story-house",
-    location: "Warri, Delta State",
-    rating: 3.6,
-    reviewsCount: 23,
-    price: 2000,
-    description:
-      "Welcome to EPIC House located in Peoria AZ. This stunning and modern 3800...",
-  },
-  {
-    id: "13226252",
-    images: ["/space-one.png", "/space-one.png", "/space-one.png"],
-    amenities: ["Wifi", "Kitchen", "Rest room"],
-    title: "Fillup Story House",
-    slug: "spacious-2-story-house",
-    location: "Warri, Delta State",
-    rating: 4,
-    reviewsCount: 23,
-    price: 2000,
-    description:
-      "Welcome to EPIC House located in Peoria AZ. This stunning and modern 3800...",
-  },
-  {
-    id: "13226252",
-    images: ["/space-one.png", "/space-one.png", "/space-one.png"],
-    amenities: ["Wifi", "Kitchen", "Free snacks"],
-    title: "Fillup Story House",
-    slug: "spacious-2-story-house",
-    location: "Warri, Delta State",
-    rating: 4,
-    reviewsCount: 23,
-    price: 2000,
-    description:
-      "Welcome to EPIC House located in Peoria AZ. This stunning and modern 3800...",
-  },
-  {
-    id: "13226252",
-    images: ["/space-one.png", "/space-one.png", "/space-one.png"],
-    amenities: ["Wifi", "Electricity", "Rest room"],
-    title: "Fillup Story House",
-    slug: "spacious-2-story-house",
-    location: "Warri, Delta State",
-    rating: 4,
-    reviewsCount: 23,
-    price: 2000,
-    description:
-      "Welcome to EPIC House located in Peoria AZ. This stunning and modern 3800...",
-  },
-  {
-    id: "13226252",
-    images: ["/space-one.png", "/space-one.png", "/space-one.png"],
-    amenities: ["Wifi", "Kitchen", "Rest room"],
-    title: "Fillup Story House",
-    slug: "spacious-2-story-house",
-    location: "Warri, Delta State",
-    rating: 4,
-    reviewsCount: 23,
-    price: 2000,
-    description:
-      "Welcome to EPIC House located in Peoria AZ. This stunning and modern 3800...",
-  },
-  {
-    id: "13226252",
-    images: ["/space-one.png", "/space-one.png", "/space-one.png"],
-    amenities: ["Wifi", "Kitchen", "Rest room"],
-    title: "Fillup Story House",
-    slug: "spacious-2-story-house",
-    location: "Warri, Delta State",
-    rating: 4,
-    reviewsCount: 23,
-    price: 2000,
-    description:
-      "Welcome to EPIC House located in Peoria AZ. This stunning and modern 3800...",
-  },
-];
-
 const Spaces = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [tabs, setTabs] = useState([]); // Initialize as an empty array
+
+  useEffect(() => {
+    const fetchTabs = async () => {
+      try {
+        const res = await fetch(`https://usetabos-beta.onrender.com/api/auth/tabs`);
+        const data = await res.json();
+        if (data.success) {
+          setTabs(data.tabs); // Ensure you're setting the `tabs` array
+        } else {
+          console.error("Failed to fetch tabs:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching tabs:", error);
+      }
+    };
+
+    fetchTabs();
+  }, []);
+
   return (
     <div className="container py-12">
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {listingData.map((listings, idx) => (
-          <ListingItem listing={listings} key={idx} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        {tabs.map((tab, idx) => (
+          <ListingItem key={idx} listing={tab} />
         ))}
       </div>
       <div className="pb-12 pt-20 flex flex-col items-center justify-center">
