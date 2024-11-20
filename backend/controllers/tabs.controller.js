@@ -3,17 +3,25 @@ import Space from '../models/space.model.js';
 
 export const createTab = async (req, res) => {
     try {
-        // Extract data from the request body
-        const { space, name, description, capacity, amenities, city, state, street, price, images } = req.body;
+        const { 
+            space, name, description, capacity, amenities, city, state, street, 
+            price, images, duration 
+        } = req.body;
 
-        // Check if spaceId is provided
         if (!space) {
             return res.status(400).json({ success: false, message: "spaceId is required" });
         }
 
-        // Create a new Tab with the spaceId assigned to the `space` field
+        // Validate the duration object
+        if (!duration || !duration.oneDay?.price || !duration.oneWeek?.price || !duration.oneMonth?.price || !duration.oneDay?.days || !duration.oneWeek?.days || !duration.oneMonth?.days) {
+            return res.status(400).json({ 
+                success: false, 
+                message: "Duration prices (oneDay, oneWeek, oneMonth) and months are required" 
+            });
+        }
+
         const newTab = new Tab({
-            space, // Ensure spaceId is assigned here
+            space,
             name,
             description,
             capacity,
@@ -22,13 +30,12 @@ export const createTab = async (req, res) => {
             city,
             state,
             street,
-            images
+            images,
+            duration, // Include the duration object here
         });
 
-        // Save the Tab
         const savedTab = await newTab.save();
 
-        // Update the associated Space by adding the new Tab's ID to the tabs array
         await Space.findByIdAndUpdate(
             space,
             { $push: { tabs: savedTab._id } },
@@ -38,9 +45,10 @@ export const createTab = async (req, res) => {
         res.status(201).json({ success: true, tab: savedTab });
     } catch (error) {
         console.error("Error in createTab:", error);
-        res.status(500).json({ success: false, message: "Server errror" });
+        res.status(500).json({ success: false, message: "Server error" });
     }
 };
+
 
 export const fetchAllTabs = async (req, res) => {
     try {

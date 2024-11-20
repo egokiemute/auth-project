@@ -3,14 +3,21 @@ import {
   Share2,
   MapPin,
   Users,
+  // Loader,
 } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import StarRating from "./StarRating";
 import Input from "./Input";
 import { useAuthStore } from "../store/authStore";
+import LoadingSpinner from "../components/LoadingSpinner";
+import ReservationForm from "./ReservationForm";
+import Select from "./Select";
+import GuestsSelect from "./GuestsSelect";
+import CustomDatePicker from "./CustomDatePicker";
 
 const TabDetail = () => {
+  const [selectedDuration, setSelectedDuration] = useState("oneDay");
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState(null);
   const params = useParams();
@@ -22,18 +29,17 @@ const TabDetail = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://usetabos-beta.onrender.com/api/auth/tab/${params.id}`
+          `http://localhost:8000/api/auth/tab/${params.id}`
         );
 
         if (!response.ok) {
           throw new Error("Failed to fetch tab details");
         }
-        console.log(response)
+        console.log(response);
 
         const data = await response.json();
         console.log(data);
         if (data.success) {
-          
           setTab(data.tab); // Assuming the API returns the tab under `data.tab`
         } else {
           console.error("Error fetching tab:", data.message);
@@ -49,24 +55,45 @@ const TabDetail = () => {
   }, [params.id]);
 
   if (loading) {
-    return <div className="text-center py-10">Loading tab details...</div>;
+    return (
+      <div className="flex items-center justify-center">
+        <LoadingSpinner className="size-10" />
+      </div>
+    );
   }
 
   if (!tab) {
     return <div className="text-center py-10">Tab details not found.</div>;
   }
 
+  console.log(tab.duration);
+  const duration = tab?.duration;
+
+  const durationOptions = Object.keys(duration).map((key) => {
+    // Format the label with space between words
+    const formattedKey = key.replace(/([A-Z])/g, " $1"); // Adds space before uppercase letters and then capitalizes
+    return {
+      value: key,
+      label: `${formattedKey} - N${duration[key].price.toLocaleString()}`, // Format price with currency symbol
+    };
+  });
+
+  // Handle change in selected duration
+  const handleDurationChange = (e) => {
+    setSelectedDuration(e.target.value);
+  };
+
   return (
-    <div className="container pb-12">
+    <div className="container pb-32">
       {/* Top Buttons */}
-      <div className="pb-10">
+      <div className="pb-10 pt-6">
         <div className="flex items-center justify-end py-4">
           <div className="flex items-center gap-3">
-            <div className="border border-gray-300 p-2 rounded-full">
-              <Heart className="text-gray-300 size-5" />
+            <div className="border border-[#00000066] p-2 rounded-full">
+              <Heart className="text-[#00000066] size-5" />
             </div>
-            <div className="border border-gray-300 p-2 rounded-full">
-              <Share2 className="text-gray-300 size-5" />
+            <div className="border border-[#00000066] p-2 rounded-full">
+              <Share2 className="text-[#00000066] size-5" />
             </div>
           </div>
         </div>
@@ -124,7 +151,9 @@ const TabDetail = () => {
             </div>
           </div>
           <div className="flex flex-col gap-1 items-start border-b border-[#0000001A] pb-10">
-            <h1 className="text-[#000000E5] text-xl mb-2 font-medium">Included in your reservation</h1>
+            <h1 className="text-[#000000E5] text-xl mb-2 font-medium">
+              Included in your reservation
+            </h1>
             <div className="space-x-2">
               {tab.amenities.map((amenity, idx) => (
                 <span
@@ -143,18 +172,20 @@ const TabDetail = () => {
         <div className="lg:w-1/3 bg-[#803EC20A] p-10 rounded-lg">
           <div className="flex flex-col items-center justify-center gap-2 mb-4">
             <h1 className="text-gray-700 font-bold text-2xl">
-              ₦{tab.price.toLocaleString()}
+            ₦{duration[selectedDuration].price.toLocaleString()}
             </h1>
-            <span className="text-[#000000A3] text-sm">All day access</span>
+            <span className="text-[#000000A3] text-sm">{duration[selectedDuration].label}</span>
           </div>
           <form className="w-full space-y-4">
-            <Input label="Date" type="date" />
-            <Input label="Arrival Time" type="time" />
-            <Input
-              label="Guest"
-              placeholder="1 - No. of guest(s)"
-              type="select"
+            {/* <Input label="Commencement date" type="date" /> */}
+            <CustomDatePicker />
+            <Select
+              label="Duration"
+              options={durationOptions}
+              value={selectedDuration}
+              onChange={handleDurationChange}
             />
+            <GuestsSelect />
             <p className="bg-white p-1 px-2 rounded-full border border-[#0000001A] w-fit text-sm font-bold -mt-10">
               Available for reservation
             </p>

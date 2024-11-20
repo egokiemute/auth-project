@@ -28,6 +28,23 @@ const tabSchema = new mongoose.Schema({
     price: {
         type: Number, // Price per hour/day, depending on your needs
     },
+    duration: {
+        oneDay: {
+            price: { type: Number, required: true }, // Default price for 1 day
+            description: { type: String, default: "All day access" },
+            days: { type: Number, required: true }
+        },
+        oneWeek: {
+            price: { type: Number, required: true }, // Price for 1 week
+            description: { type: String, default: "A week access" },
+            days: { type: Number, required: true }
+        },
+        oneMonth: {
+            price: { type: Number, required: true }, // Price for 1 month
+            description: { type: String, default: "A month access" },
+            days: { type: Number, required: true }
+        },
+    },
     images: [{
         type: String // URLs of images specific to this tab
     }],

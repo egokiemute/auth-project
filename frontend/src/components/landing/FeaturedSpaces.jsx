@@ -64,7 +64,7 @@ const FeaturedSpaces = () => {
 useEffect(() => {
   const fetchTabs = async () => {
     try {
-      const res = await fetch(`https://usetabos-beta.onrender.com/api/auth/tabs`);
+      const res = await fetch(`http://localhost:8000/api/auth/tabs`);
       const data = await res.json();
       if (data.success) {
         // Limit the tabs array to the first three items
