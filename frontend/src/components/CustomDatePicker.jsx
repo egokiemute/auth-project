@@ -1,7 +1,7 @@
 import { useState } from "react";
 import dayjs from "dayjs"; // Install with `npm install dayjs`
 
-const CustomDatePicker = () => {
+const CustomDatePicker = ({ onDateChange }) => {
   const [selectedDate, setSelectedDate] = useState("");
   const [showCalendar, setShowCalendar] = useState(false);
 
@@ -23,6 +23,11 @@ const CustomDatePicker = () => {
 
     setSelectedDate(selected);
     setShowCalendar(false);
+
+    // Call the callback function to pass the selected date to the parent
+    if (onDateChange) {
+      onDateChange(selected);
+    }
   };
 
   const isPastDate = (day, month) => {
@@ -35,7 +40,7 @@ const CustomDatePicker = () => {
 
   return (
     <div className="relative">
-        <labe>Commencement date</labe>
+      <label>Commencement Date</label>
       {/* Input Field */}
       <input
         type="text"

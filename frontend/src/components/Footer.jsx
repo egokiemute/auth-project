@@ -21,15 +21,6 @@ const Footer = () => {
                 <Link to="tel:+2347040340319">+234 704 034 0319</Link>
               </div>
             </div>
-            {/* <div className="flex flex-col items-start gap-3">
-              <h4 className="text-white text-xl">Host</h4>
-              <div className="flex items-center gap-1 text-[#FFFFFFC2] text-sm">
-                <Link to="/list-space">List your space</Link>
-              </div>
-              <div className="flex items-center gap-1 text-[#FFFFFFC2] text-sm">
-                <Link to="https://wa.me/">Community</Link>
-              </div>
-            </div> */}
             <div className="flex flex-col items-start gap-3">
               <h4 className="text-white text-xl">Explore</h4>
               <div className="flex items-center gap-1 text-[#FFFFFFC2] text-sm whitespace-nowrap">
@@ -38,12 +29,6 @@ const Footer = () => {
               <div className="flex items-center gap-1 text-[#FFFFFFC2] text-sm whitespace-nowrap">
                 <Link to="/activities">Activites</Link>
               </div>
-              {/* <div className="flex items-center gap-1 text-[#FFFFFFC2] text-sm">
-                <Link to="/locations">Locations</Link>
-              </div>
-              <div className="flex items-center gap-1 text-[#FFFFFFC2] text-sm">
-                <Link to="/join-us">Ambassador</Link>
-              </div> */}
             </div>
           </div>
           <div className="bg-white max-w-md rounded-xl p-6 hidden md:block w-full">

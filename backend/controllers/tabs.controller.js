@@ -77,7 +77,8 @@ export const getTab = async (req, res) => {
       }
       res.status(200).json({ success: true, tab });
     } catch (error) {
-      next(error);
+        console.error("Error fetching tab:", error);
+        res.status(500).json({ success: false, message: "Server error" });
     }
   };
 

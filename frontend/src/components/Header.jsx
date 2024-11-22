@@ -68,7 +68,7 @@ const Header = () => {
   // }, [location.search]);
 
   return (
-    <div className="container font-acronym flex items-center justify-between py-2">
+    <div className="container font-acronym flex items-center justify-between py-4">
       <div className="flex items-center gap-6">
         <Link to="/">
           <img src="/logo.svg" alt="TabOS" />

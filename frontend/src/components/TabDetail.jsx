@@ -1,46 +1,46 @@
-import {
-  Heart,
-  Share2,
-  MapPin,
-  Users,
-  // Loader,
-} from "lucide-react";
-import { useParams } from "react-router-dom";
+import { Heart, Share2, MapPin, Users } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import StarRating from "./StarRating";
-import Input from "./Input";
 import { useAuthStore } from "../store/authStore";
 import LoadingSpinner from "../components/LoadingSpinner";
-import ReservationForm from "./ReservationForm";
 import Select from "./Select";
 import GuestsSelect from "./GuestsSelect";
 import CustomDatePicker from "./CustomDatePicker";
+import calculateEndDateExcludingSundays from "../utils";
+import toast from "react-hot-toast";
+import { useReserveStore } from "../store/reservationStore";
 
 const TabDetail = () => {
-  const [selectedDuration, setSelectedDuration] = useState("oneDay");
-  const [loading, setLoading] = useState(false);
+  const { initiate, isLoading, error } = useReserveStore();
   const [tab, setTab] = useState(null);
+  const [loading, setLoading] = useState(false);
   const params = useParams();
   const { user } = useAuthStore();
+  const navigate = useNavigate();
 
+  const [selectedDate, setSelectedDate] = useState("");
+  const [totalGuests, setTotalGuests] = useState(1);
+  const [selectedDuration, setSelectedDuration] = useState({
+    value: "oneDay",
+    label: "1 day",
+    price: 0,
+    days: 1,
+  });
+
+  // Fetch tab details
   useEffect(() => {
     const fetchTab = async () => {
-      console.log("Params:", params);
       try {
         setLoading(true);
         const response = await fetch(
           `http://localhost:8000/api/auth/tab/${params.id}`
         );
-
         if (!response.ok) {
           throw new Error("Failed to fetch tab details");
         }
-        console.log(response);
-
         const data = await response.json();
-        console.log(data);
         if (data.success) {
-          setTab(data.tab); // Assuming the API returns the tab under `data.tab`
+          setTab(data.tab);
         } else {
           console.error("Error fetching tab:", data.message);
         }
@@ -54,6 +54,100 @@ const TabDetail = () => {
     fetchTab();
   }, [params.id]);
 
+  // Prepare options from `tab.duration` once tab data is loaded
+  useEffect(() => {
+    if (tab) {
+      setSelectedDuration({
+        value: "oneDay",
+        label: `1 day - ${tab.duration.oneDay.price} currency`,
+        price: tab.duration.oneDay.price,
+        days: tab.duration.oneDay.days,
+      });
+    }
+  }, [tab]);
+
+  // Update selected duration based on user selection
+  const handleDurationChange = (e) => {
+    const selectedValue = e.target.value;
+    const selectedOption = tab.duration[selectedValue];
+    if (selectedOption) {
+      setSelectedDuration({
+        value: selectedValue,
+        label: `${selectedOption.days} day(s) - ${selectedOption.price} currency`,
+        price: selectedOption.price,
+        days: selectedOption.days,
+      });
+    }
+  };
+
+  // Handle guest count change
+  const handleGuestsChange = (updatedGuests) => {
+    const guests = Object.values(updatedGuests).reduce(
+      (sum, count) => sum + count,
+      0
+    );
+    setTotalGuests(guests);
+  };
+
+  // Handle date change
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
+  // Calculate end date based on selected date and duration
+  const endDate = calculateEndDateExcludingSundays(
+    selectedDate,
+    selectedDuration.days
+  );
+
+  // Calculate expected amounts
+  const expectedBaseAmount = selectedDuration.price * totalGuests;
+  const expectedTransactionFee = expectedBaseAmount * 0.1;
+  const expectedFinalAmount = expectedBaseAmount + expectedTransactionFee;
+
+  console.log(
+    user?._id,
+    tab?._id,
+    selectedDate,
+    endDate,
+    totalGuests,
+    selectedDuration?.days,
+    selectedDuration?.price,
+    expectedBaseAmount,
+    expectedTransactionFee,
+    expectedFinalAmount
+  );
+
+  const userId =  user?._id;
+  const tabId =  tab?._id;
+  let commencementDate =  selectedDate;
+  let guests =  totalGuests;
+  let duration =  selectedDuration?.days;
+  let amount =  expectedFinalAmount;
+
+
+  // Handle reservation form submission
+  const handleReservation = async (e) => {
+    e.preventDefault();
+    try {
+      await initiate(
+        userId,
+        tabId,
+        commencementDate,
+        endDate,
+        duration,
+        guests,
+        amount
+      );
+      console.log("Dooooooo")
+      toast.success("Reservetion initiated.");
+      navigate("/reserve");
+    } catch (err) {
+      console.error(err);
+    }
+    
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center">
@@ -65,23 +159,6 @@ const TabDetail = () => {
   if (!tab) {
     return <div className="text-center py-10">Tab details not found.</div>;
   }
-
-  console.log(tab.duration);
-  const duration = tab?.duration;
-
-  const durationOptions = Object.keys(duration).map((key) => {
-    // Format the label with space between words
-    const formattedKey = key.replace(/([A-Z])/g, " $1"); // Adds space before uppercase letters and then capitalizes
-    return {
-      value: key,
-      label: `${formattedKey} - N${duration[key].price.toLocaleString()}`, // Format price with currency symbol
-    };
-  });
-
-  // Handle change in selected duration
-  const handleDurationChange = (e) => {
-    setSelectedDuration(e.target.value);
-  };
 
   return (
     <div className="container pb-32">
@@ -126,13 +203,6 @@ const TabDetail = () => {
         <div className="lg:w-1/2">
           <h1 className="text-5xl font-bold mt-1">{tab.name}</h1>
           <div className="py-3 flex items-center gap-3">
-            {/* <div className="flex items-center gap-3">
-              <StarRating rating={tab.rating || 0} />
-              <span className="font-semibold">{tab.rating || "N/A"}</span>
-              <span className="text-[#803EC2] underline text-[14px]">
-                ({tab.reviewsCount || 0} reviews)
-              </span>
-            </div> */}
             <div className="flex items-center gap-2">
               <div className="border border-[#00000066] p-2 rounded-full">
                 <MapPin className="text-[#00000066] size-5" />
@@ -172,20 +242,24 @@ const TabDetail = () => {
         <div className="lg:w-1/3 bg-[#803EC20A] p-10 rounded-lg">
           <div className="flex flex-col items-center justify-center gap-2 mb-4">
             <h1 className="text-gray-700 font-bold text-2xl">
-            ₦{duration[selectedDuration].price.toLocaleString()}
+              ₦{expectedFinalAmount.toLocaleString()}
             </h1>
-            <span className="text-[#000000A3] text-sm">{duration[selectedDuration].label}</span>
+            <span className="text-[#000000A3] text-sm">All</span>
           </div>
-          <form className="w-full space-y-4">
-            {/* <Input label="Commencement date" type="date" /> */}
-            <CustomDatePicker />
+          <form onSubmit={handleReservation} className="w-full space-y-4">
+            <CustomDatePicker onDateChange={handleDateChange} />
             <Select
-              label="Duration"
-              options={durationOptions}
-              value={selectedDuration}
+              label="Choose Duration"
+              options={Object.keys(tab.duration).map((key) => ({
+                value: key,
+                label: `${tab.duration[key].days} day(s) - ${tab.duration[key].price} currency`,
+                price: tab.duration[key].price,
+                days: tab.duration[key].days,
+              }))}
+              value={selectedDuration.value}
               onChange={handleDurationChange}
             />
-            <GuestsSelect />
+            <GuestsSelect onGuestsChange={handleGuestsChange} />
             <p className="bg-white p-1 px-2 rounded-full border border-[#0000001A] w-fit text-sm font-bold -mt-10">
               Available for reservation
             </p>

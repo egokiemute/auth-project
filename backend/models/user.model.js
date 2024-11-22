@@ -47,6 +47,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    reservations: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Reservation',
+        },
+    ],
     role: {
         type: String,
         enum: ["user", "admin"], // Define the roles you need

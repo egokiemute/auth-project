@@ -4,7 +4,7 @@ import { PlusIcon, MinusIcon } from "lucide-react";
 const GuestsSelect = ({ onGuestsChange }) => {
   const [showModal, setShowModal] = useState(false);
   const [guests, setGuests] = useState({
-    justMe: 1,
+    justMe: 1, // Default value
     team: 0,
     friends: 0,
     startupSpace: 0,
@@ -15,6 +15,11 @@ const GuestsSelect = ({ onGuestsChange }) => {
   };
 
   const updateGuestCount = (key, increment) => {
+    if (key === "justMe") {
+      // Prevent modification of "justMe"
+      return;
+    }
+
     setGuests((prev) => {
       const updatedGuests = {
         ...prev,
@@ -32,13 +37,13 @@ const GuestsSelect = ({ onGuestsChange }) => {
 
   return (
     <div className="relative">
+      <label className="font-semibold">Guests:</label>
       {/* Trigger Button */}
       <button
         type="button"
         onClick={toggleModal}
         className="px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm text-black text-base flex justify-between items-center w-full"
       >
-        Guests:
         <span className="ml-2 text-gray-500">
           {Object.values(guests).reduce((sum, count) => sum + count, 0)} Selected
         </span>
@@ -48,7 +53,8 @@ const GuestsSelect = ({ onGuestsChange }) => {
       {showModal && (
         <div className="absolute top-full mt-2 left-0 w-64 bg-white rounded-lg shadow-lg p-4 z-50">
           <h3 className="text-lg font-medium mb-4">Who is coming along</h3>
-          {[{ label: "Just me", key: "justMe" },
+          {[
+            { label: "Just me", key: "justMe" },
             { label: "My team and I", key: "team" },
             { label: "Bringing friends", key: "friends" },
             { label: "For startup space", key: "startupSpace" },
@@ -63,6 +69,7 @@ const GuestsSelect = ({ onGuestsChange }) => {
                   type="button"
                   onClick={() => updateGuestCount(key, false)}
                   className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
+                  disabled={key === "justMe"} // Disable for "justMe"
                 >
                   <MinusIcon className="w-4 h-4" />
                 </button>
@@ -71,6 +78,7 @@ const GuestsSelect = ({ onGuestsChange }) => {
                   type="button"
                   onClick={() => updateGuestCount(key, true)}
                   className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
+                  disabled={key === "justMe"} // Disable for "justMe"
                 >
                   <PlusIcon className="w-4 h-4" />
                 </button>

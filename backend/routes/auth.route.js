@@ -4,6 +4,7 @@ import { verifyToken } from "../middleware/verifyToken.js";
 import { verifyAdminToken } from "../middleware/verifyAdminToken.js";
 import { createSpace } from "../controllers/space.controller.js";
 import { createTab, fetchAllTabs, getTab } from "../controllers/tabs.controller.js";
+import { createReservation, fetchAllReservations, fetchSingle, fetchUserReservations, updateReservation } from "../controllers/reservation.controller.js";
 
 const router = express.Router();
 
@@ -35,5 +36,11 @@ router.post("/create", verifyAdminToken, createSpace);
 router.post("/create-tab", verifyAdminToken, createTab)
 router.get("/tabs", fetchAllTabs);
 router.get("/tab/:id", getTab);
+
+router.post('/reserve', createReservation);
+router.get('/reserve/:id', fetchSingle);
+router.get('/reserve/all', fetchAllReservations);
+router.get('/reservations/user/:userId', fetchUserReservations);
+router.post('/reserve/:id/status', updateReservation);
 
 export default router;

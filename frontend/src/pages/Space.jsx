@@ -92,13 +92,18 @@ const Space = () => {
           className="min-w-md w-full mt-10 p-8 flex items-center justify-center bg-[#00000005] rounded-xl border-[1px] border-[#0000001A]"
         >
           <div className="text-center max-w-xs flex flex-col items-center">
-          <div className="bg-[#0000000D] border border-[#0000000D] p-2 rounded-full w-fit mb-2">
-                <Smile className="text-[#00000066] size-5" />
-              </div>
-            <p className="text-base text-[#000000A3]">Don't have any active tab, book your first tab now near you!</p>
-            <button className="mt-5 w-fit py-3 px-4 bg-black text-white font-bold rounded-lg focus:outline-none transition duration-200">
-            Book a space now
-          </button>
+            <div className="bg-[#0000000D] border border-[#0000000D] p-2 rounded-full w-fit mb-2">
+              <Smile className="text-[#00000066] size-5" />
+            </div>
+            <p className="text-base text-[#000000A3]">
+              Don't have any active tab, book your first tab now near you!
+            </p>
+            <Link
+              to="/spaces"
+              className="mt-5 w-fit py-3 px-4 bg-black text-white font-bold rounded-lg focus:outline-none transition duration-200"
+            >
+              Book a space now
+            </Link>
           </div>
         </motion.div>
       </div>

@@ -20,6 +20,7 @@ import AdminLogin from "./pages/AdminLogin";
 import TabDetail from "./components/TabDetail";
 import Settings from "./pages/Settings";
 import Home from "./pages/Home";
+import Booking from "./pages/Booking";
 // import { Settings } from "lucide-react";
 
 // protect routes that require authentication
@@ -100,6 +101,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <Space />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/reserve"
+            element={
+              <ProtectedRoute>
+                <Booking />
               </ProtectedRoute>
             }
           />

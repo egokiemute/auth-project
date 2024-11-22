@@ -1,17 +1,11 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Carousel from "./Carousel";
-import StarRating from "./StarRating";
-import { Heart } from "lucide-react";
 
 const ListingItem = ({ listing }) => {
-  // const navigate = useNavigate();
-  // const goToTabDetail = (id) => {
-  //   navigate(`/tab/${id}`);
-  // };
 
   return (
-    <div className="w-full max-w-sm mx-auto bg-white rounded-lg shadow-sm overflow-hidden relative">
+    <div className="w-full max-w-sm h-[360px] mx-auto bg-white rounded-lg shadow-sm overflow-hidden relative">
       {/* Image Carousel */}
       <div className="relative">
         <Carousel images={listing.images || ["/default.jpg"]} />{" "}
@@ -32,13 +26,6 @@ const ListingItem = ({ listing }) => {
                 /day
               </span>
             </div>
-            {/* <div className="flex items-center gap-1 text-sm my-2">
-              <StarRating rating={listing.rating} />
-              <span className="font-semibold text-sm">{listing.rating}</span>
-              <span className="text-[#803EC2] underline text-sm">
-                ({listing.reviewsCount} reviews)
-              </span>
-            </div> */}
           </div>
           <h3 className="font-semibold text-xl text-[#000000E5]">
             {listing.title}
@@ -50,9 +37,9 @@ const ListingItem = ({ listing }) => {
             {listing.city}, {listing.state}
           </p>
           <div className="flex items-center gap-2 text-[#000000A3] text-base font-medium mt-1">
-            {listing?.amenities?.map((perk, index) => (
+            {listing?.amenities?.slice(0, 3).map((perk, index) => (
               <React.Fragment key={perk}>
-                <span>
+                <span className="whitespace-nowrap">
                   {perk.replace(/\b\w/g, (char) => char.toUpperCase())}
                 </span>
                 {index < listing.amenities.length - 1 && <span>&bull;</span>}

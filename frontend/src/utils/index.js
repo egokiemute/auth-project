@@ -23,3 +23,27 @@ export const useCloudinaryUpload = () => {
 
   return { uploadToCloudinary };
 };
+
+function calculateEndDateExcludingSundays(startDate, daysToAdd) {
+  let date = new Date(startDate); // Start with the given date
+  let daysAdded = 0; // Counter for days added, excluding Sundays
+
+  while (daysAdded < daysToAdd) {
+      date.setDate(date.getDate() + 1); // Move to the next day
+      // Check if it's not Sunday
+      if (date.getDay() !== 0) {
+          daysAdded++; // Increment the counter only for non-Sundays
+      }
+  }
+
+  // Format date as yyyy-mm-dd
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
+export default calculateEndDateExcludingSundays;
+
+

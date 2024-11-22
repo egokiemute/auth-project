@@ -1,46 +1,18 @@
-import { motion } from "framer-motion";
 import { Armchair, Headset, MapPin, Zap } from "lucide-react";
 import React from "react";
 
 const Benefits = () => {
-  const fadeIn = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
   return (
     <div className="bg-white py-32">
       <div className="container max-w-7xl mx-auto">
         {/* Core Benefits Section */}
-        <motion.div
-          className="flex flex-col gap-4 items-center justify-center mb-20"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={staggerContainer}
-        >
-          <motion.h2 className="text-5xl font-bold mb-8" variants={fadeIn}>
-            Core benefits
-          </motion.h2>
-          <motion.div
-            className="grid grid-cols-3 gap-8"
-            variants={staggerContainer}
-          >
+        <div className="flex flex-col gap-4 items-center justify-center mb-20">
+          <h2 className="text-5xl font-bold mb-8">Core benefits</h2>
+          <div className="grid grid-cols-3 gap-8">
             {[1, 2, 3].map((benefit, index) => (
-              <motion.div
+              <div
                 key={index}
                 className="flex flex-col items-start gap-3 max-w-[370px]"
-                variants={fadeIn}
               >
                 <img
                   src={`/assets/benefits/benefit-${benefit}.webp`}
@@ -63,31 +35,42 @@ const Benefits = () => {
                     ? "Join a vibrant community of like-minded professionals."
                     : "Elevate your work with our thoughtfully designed spaces and state-of-the-art amenities."}
                 </p>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Key Differentiators Section */}
-        <motion.div
-          className="flex flex-col gap-10 items-center justify-center"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={staggerContainer}
-        >
-          <motion.h2 className="text-5xl font-bold" variants={fadeIn}>
-            Key differentiators
-          </motion.h2>
-          <motion.div className="grid grid-cols-4 gap-8" variants={staggerContainer}>
+        <div className="flex flex-col gap-10 items-center justify-center">
+          <h2 className="text-5xl font-bold">Key differentiators</h2>
+          <div className="grid grid-cols-4 gap-8">
             {[Zap, Armchair, MapPin, Headset].map((Icon, index) => (
-              <motion.div
+              <div
                 key={index}
                 className="flex flex-col items-center justify-center text-center gap-2 max-w-[280px]"
-                variants={fadeIn}
               >
-                <div className={`border p-4 rounded-full ${index === 0 ? "border-[#CC3B3129]" : index === 1 ? "border-[#803EC233]" : index === 2 ? "border-[#A3761A33]" : "border-[#027A4833]"}`}>
-                  <Icon className={`${index === 0 ? "text-[#CC3B31B8]" : index === 1 ? "text-[#803EC2B8]" : index === 2 ? "text-[#A3761AB8]" : "text-[#027A48B8]"} size-8`} />
+                <div
+                  className={`border p-4 rounded-full ${
+                    index === 0
+                      ? "border-[#CC3B3129]"
+                      : index === 1
+                      ? "border-[#803EC233]"
+                      : index === 2
+                      ? "border-[#A3761A33]"
+                      : "border-[#027A4833]"
+                  }`}
+                >
+                  <Icon
+                    className={`${
+                      index === 0
+                        ? "text-[#CC3B31B8]"
+                        : index === 1
+                        ? "text-[#803EC2B8]"
+                        : index === 2
+                        ? "text-[#A3761AB8]"
+                        : "text-[#027A48B8]"
+                    } size-8`}
+                  />
                 </div>
                 <h3 className="font-bold text-xl">
                   {index === 0
@@ -107,10 +90,10 @@ const Benefits = () => {
                     ? "Strategically located in the heart of the city."
                     : "Your success is our priority."}
                 </p>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </div>
   );
