@@ -4,14 +4,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   CircleHelp,
-  House,
   LogOut,
-  Settings,
   SlidersVertical,
-  Space,
   User,
-  User2Icon,
-  UserCogIcon,
 } from "lucide-react";
 
 const Header = () => {

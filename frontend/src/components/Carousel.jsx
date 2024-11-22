@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import CarouselDots from "./CarouselDots"; // Importing the dots component
+import CarouselDots from "./CarouselDots"; 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Carousel = ({ images }) => {

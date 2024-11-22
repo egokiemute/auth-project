@@ -45,7 +45,7 @@ const Reservation = ({ reservation }) => {
       if (reservation && reservation.tab) {
         try {
           const response = await axios.get(
-            `http://localhost:8000/api/auth/tab/${reservation.tab}`
+            `https://usetabos-beta.onrender.com/api/auth/tab/${reservation.tab}`
           );
 
           setTabDetails(response.data.tab);

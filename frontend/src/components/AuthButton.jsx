@@ -48,10 +48,7 @@ const AuthButton = () => {
   return (
     <div className="mt-5 w-full">
       <motion.button
-        className="w-full flex items-center justify-center text-center gap-2 py-3 px-4 bg-transparent border-2 border-gradient-to-r from-black to-black text-black 
-                    font-medium rounded-lg hover:opacity-80
-                     focus:outline-none focus:ring-2 focus:opacity-80 focus:ring-offset-2
-                    focus:ring-offset-gray-900 transition duration-200"
+        className="w-full flex items-center justify-center text-center gap-2 py-3 px-4 bg-transparent border-2 border-gradient-to-r from-black to-black text-black font-medium rounded-lg hover:opacity-80 focus:outline-none focus:ring-2 focus:opacity-80 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-200"
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         // onClick={handleGoogleLogin}

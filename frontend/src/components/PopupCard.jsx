@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 const PopupCard = ({ isOpen, onClose, children, heading, className }) => {
   // Disable scrolling on the background when the popup is open

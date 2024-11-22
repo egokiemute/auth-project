@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Carousel from "./Carousel";
 
 const ListingItem = ({ listing }) => {
-
   return (
     <div className="w-full max-w-sm h-[360px] mx-auto bg-white rounded-lg shadow-sm overflow-hidden relative">
       {/* Image Carousel */}

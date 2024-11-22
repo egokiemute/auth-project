@@ -14,14 +14,14 @@ const Booking = () => {
   const [tabDetails, setTabDetails] = useState(null);
   const { user } = useAuthStore();
   const { reservation, status } = useReserveStore(); // Access the update function
-  const PUBLIC_KEY = "pk_test_9d3f2fbb301e80e26d19359296310902b94b2e98";
+  const PUBLIC_KEY = `${process.env.VITE_PAYSTACK_PRIVATE_KEY}`;
 
   useEffect(() => {
     const fetchTabDetails = async () => {
       if (reservation && reservation.tab) {
         try {
           const response = await axios.get(
-            `http://localhost:8000/api/auth/tab/${reservation.tab}`
+            `https://usetabos-beta.onrender.com/api/auth/tab/${reservation.tab}`
           );
           setTabDetails(response.data);
         } catch (error) {

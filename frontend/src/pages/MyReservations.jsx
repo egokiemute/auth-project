@@ -71,7 +71,7 @@ const MyReservations = () => {
       <div className="flex flex-col gap-6 items-start">
         <div className="flex flex-col gap-4 items-start">
           <h1 className="text-3xl font-bold tracking-wide">My Reservations</h1>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             {categories.map((category, index) => (
               <button
                 key={index}

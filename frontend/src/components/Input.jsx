@@ -1,7 +1,7 @@
-import { EyeIcon, EyeOffIcon } from 'lucide-react';
-import { useState } from 'react';
+import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { useState } from "react";
 
-const Input = ({ icon: Icon, label, type = 'text', ...props }) => {
+const Input = ({ icon: Icon, label, type = "text", ...props }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   // Toggle password visibility
@@ -9,8 +9,8 @@ const Input = ({ icon: Icon, label, type = 'text', ...props }) => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  const isPasswordType = type === 'password';
-  const inputType = isPasswordType && isPasswordVisible ? 'text' : type;
+  const isPasswordType = type === "password";
+  const inputType = isPasswordType && isPasswordVisible ? "text" : type;
 
   return (
     <div className="relative">
@@ -31,8 +31,8 @@ const Input = ({ icon: Icon, label, type = 'text', ...props }) => {
         <input
           {...props}
           type={inputType}
-          className={`w-full ${Icon ? 'pl-10' : 'pl-3'} ${
-            isPasswordType ? 'pr-10' : 'pr-3'
+          className={`w-full ${Icon ? "pl-10" : "pl-3"} ${
+            isPasswordType ? "pr-10" : "pr-3"
           } py-2 bg-white rounded-lg border border-[#00000066] focus:outline-none appearance-none outline-none text-black placeholder-gray-400 transition duration-200`}
         />
         {/* Password visibility toggle icon on the right */}

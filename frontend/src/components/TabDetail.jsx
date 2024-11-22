@@ -33,7 +33,7 @@ const TabDetail = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `http://localhost:8000/api/auth/tab/${params.id}`
+          `https://usetabos-beta.onrender.com/api/auth/tab/${params.id}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch tab details");

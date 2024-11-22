@@ -45,7 +45,8 @@ const GuestsSelect = ({ onGuestsChange }) => {
         className="px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm text-black text-base flex justify-between items-center w-full"
       >
         <span className="ml-2 text-gray-500">
-          {Object.values(guests).reduce((sum, count) => sum + count, 0)} Selected
+          {Object.values(guests).reduce((sum, count) => sum + count, 0)}{" "}
+          Selected
         </span>
       </button>
 

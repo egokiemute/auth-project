@@ -8,14 +8,14 @@ import { Link } from "react-router-dom";
 const Space = () => {
   const { user, logout } = useAuthStore();
 
-  const ninStatus = user.isNinVerified;
-  console.log(user);
+  // const ninStatus = user.isNinVerified;
+  // console.log(user);
   // console.log(fetchAllTabs);
-  console.log("user");
+  // console.log("user");
 
-  const handleLogout = () => {
-    logout();
-  };
+  // const handleLogout = () => {
+  //   logout();
+  // };
   return (
     <div className="container">
       <div className="py-16 px-4">
