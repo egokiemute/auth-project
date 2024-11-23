@@ -76,6 +76,7 @@ const TabDetail = () => {
         label: `${selectedOption.days} day(s) - ${selectedOption.price} currency`,
         price: selectedOption.price,
         days: selectedOption.days,
+        description: selectedOption.description,
       });
     }
   };
@@ -105,26 +106,25 @@ const TabDetail = () => {
   const expectedTransactionFee = expectedBaseAmount * 0.1;
   const expectedFinalAmount = expectedBaseAmount + expectedTransactionFee;
 
-  console.log(
-    user?._id,
-    tab?._id,
-    selectedDate,
-    endDate,
-    totalGuests,
-    selectedDuration?.days,
-    selectedDuration?.price,
-    expectedBaseAmount,
-    expectedTransactionFee,
-    expectedFinalAmount
-  );
+  // console.log(
+  //   user?._id,
+  //   tab?._id,
+  //   selectedDate,
+  //   endDate,
+  //   totalGuests,
+  //   selectedDuration?.days,
+  //   selectedDuration?.price,
+  //   expectedBaseAmount,
+  //   expectedTransactionFee,
+  //   expectedFinalAmount
+  // );
 
-  const userId =  user?._id;
-  const tabId =  tab?._id;
-  let commencementDate =  selectedDate;
-  let guests =  totalGuests;
-  let duration =  selectedDuration?.days;
-  let amount =  expectedFinalAmount;
-
+  const userId = user?._id;
+  const tabId = tab?._id;
+  let commencementDate = selectedDate;
+  let guests = totalGuests;
+  let duration = selectedDuration?.days;
+  let amount = expectedFinalAmount;
 
   // Handle reservation form submission
   const handleReservation = async (e) => {
@@ -139,13 +139,12 @@ const TabDetail = () => {
         guests,
         amount
       );
-      console.log("Dooooooo")
+      // console.log("Dooooooo")
       toast.success("Reservetion initiated.");
       navigate("/reserve");
     } catch (err) {
       console.error(err);
     }
-    
   };
 
   if (loading) {
@@ -159,6 +158,9 @@ const TabDetail = () => {
   if (!tab) {
     return <div className="text-center py-10">Tab details not found.</div>;
   }
+  // const handleDurationChange = (selectedOption) => {
+  //   setSelectedDuration(selectedOption);
+  // };
 
   return (
     <div className="container pb-32">
@@ -244,7 +246,10 @@ const TabDetail = () => {
             <h1 className="text-gray-700 font-bold text-2xl">
               ₦{expectedFinalAmount.toLocaleString()}
             </h1>
-            <span className="text-[#000000A3] text-sm">All</span>
+            {/* Dynamically update the description */}
+            <span className="text-[#000000A3] text-sm">
+              {selectedDuration?.description || "Select a duration to see details"}
+            </span>
           </div>
           <form onSubmit={handleReservation} className="w-full space-y-4">
             <CustomDatePicker onDateChange={handleDateChange} />
@@ -252,9 +257,12 @@ const TabDetail = () => {
               label="Choose Duration"
               options={Object.keys(tab.duration).map((key) => ({
                 value: key,
-                label: `${tab.duration[key].days} day(s) - ${tab.duration[key].price} currency`,
+                label: `${tab.duration[key].days} day${
+                  tab.duration[key].days === 1 ? "" : "s"
+                } - ${tab.duration[key].price} currency`,
                 price: tab.duration[key].price,
                 days: tab.duration[key].days,
+                description: tab.duration[key].description, // Add description here
               }))}
               value={selectedDuration.value}
               onChange={handleDurationChange}

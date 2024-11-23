@@ -1,6 +1,7 @@
 // import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import ListingItem from "../ListingItem";
+import LoadingSpinner from "../LoadingSpinner";
 
 // const listingData = [
 //     {
@@ -59,6 +60,7 @@ import ListingItem from "../ListingItem";
 
 const FeaturedSpaces = () => {
   const [tabs, setTabs] = useState([]); // Initialize as an empty array
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTabs = async () => {
@@ -73,6 +75,8 @@ const FeaturedSpaces = () => {
         }
       } catch (error) {
         console.error("Error fetching tabs:", error);
+      } finally {
+        setLoading(false); // End loading state
       }
     };
 
@@ -83,22 +87,32 @@ const FeaturedSpaces = () => {
   return (
     <div className="bg-white py-32">
       <div className=" container max-w-7xl mx-auto">
-        {/* Core Community Section */}
-        <div className="flex flex-col gap-4 items-center justify-center mb-20">
-          <div className="flex flex-col text-center mb-6">
-            <h2 className="text-5xl font-bold mb-4">Our most used spaces</h2>
-          </div>
-          <div className="grid grid-cols-3 gap-10">
-            {tabs.map((listings, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-start gap-4 w-[300px]"
-              >
-                <ListingItem listing={listings} />
-              </div>
-            ))}
+        {loading ? (
+          <div className="flex justify-center items-center h-screen">
+          <div className="text-center">
+            <LoadingSpinner />
           </div>
         </div>
+        ) : (
+          <>
+            {/* Core Community Section */}
+        <div className="flex flex-col gap-4 items-center justify-center mb-20">
+        <div className="flex flex-col text-center mb-6">
+          <h2 className="text-5xl font-bold mb-4">Our most used spaces</h2>
+        </div>
+        <div className="grid grid-cols-3 gap-10">
+          {tabs.map((listings, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-start gap-4 w-[300px]"
+            >
+              <ListingItem listing={listings} />
+            </div>
+          ))}
+        </div>
+      </div>
+          </>
+        )}
       </div>
     </div>
   );

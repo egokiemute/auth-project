@@ -14,16 +14,18 @@ const Booking = () => {
   const [tabDetails, setTabDetails] = useState(null);
   const { user } = useAuthStore();
   const { reservation, status } = useReserveStore(); // Access the update function
-  const PUBLIC_KEY = `${process.env.VITE_PAYSTACK_PRIVATE_KEY}`;
+  const PUBLIC_KEY = "pk_live_cadc7fcc8f8335b15185be2579171452b91b9fed";
 
   useEffect(() => {
     const fetchTabDetails = async () => {
-      if (reservation && reservation.tab) {
+      if (reservation.tab) {
         try {
+          console.log("Fetching tab details for:", reservation.tab);
           const response = await axios.get(
             `https://usetabos-beta.onrender.com/api/auth/tab/${reservation.tab}`
           );
-          setTabDetails(response.data);
+          console.log("reservation.tab:", reservation?.tab);
+          setTabDetails(response.data.tab);
         } catch (error) {
           console.error("Error fetching tab details:", error);
         }
@@ -31,14 +33,14 @@ const Booking = () => {
     };
 
     fetchTabDetails();
-  }, [reservation]);
+  }, [reservation.tab]);
 
   if (!reservation) {
     return <p>No reservation found. Please initiate a reservation first.</p>;
   }
 
-  console.log(reservation?._id);
-  // console.log(tabDetails);
+  console.log(reservation?.tab);
+  console.log(tabDetails);
 
   // const price = reservation?.amount;
   const email = user?.email;
@@ -47,33 +49,29 @@ const Booking = () => {
   const amount = reservation?.amount;
   const publicKey = PUBLIC_KEY;
   const reservationId = String(reservation?._id);
-  console.log(reservationId)
-
+  console.log(reservationId);
 
   const componentProps = {
-    email,
-    amount: amount * 100,
+    publicKey,
+    email: email || "ctrl@usetabos.com", // Fallback email for testing
+    amount: (amount || 0) * 100, // Ensure amount is valid
     text: isLoading ? (
-      <Loader className="w-6 h-6 animate-spin  mx-auto" />
+      <Loader className="w-6 h-6 animate-spin mx-auto" />
     ) : (
       "Confirm and pay"
     ),
-    metadata: { firstname, phone },
-    publicKey,
-    reference: new Date().getTime().toString(),
+    metadata: { firstname: firstname || "Guest", phone: phone || "0000000000" },
+    reference: `ref-${new Date().getTime()}`,
     onSuccess: async (reference) => {
       console.log("Payment success reference:", reference);
       setIsPopupOpen(true);
       setIsLoading(true);
 
       try {
-        // Call the updateReservation API
         await status({
           reservationId,
           status: "confirmed",
         });
-        // console.log("Reservation updated successfully.");
-        // navigate("/reservations");
       } catch (error) {
         console.error("Error updating reservation:", error);
       } finally {
@@ -97,7 +95,7 @@ const Booking = () => {
               <div className="flex flex-col gap-4 items-start">
                 <h1 className="font-bold text-base">Top choice</h1>
                 <p className="text-sm">
-                  South circle has been a top choice recently.
+                  {tabDetails?.name || "*****"} has been a top choice recently.
                 </p>
               </div>
               <img
@@ -147,14 +145,14 @@ const Booking = () => {
                 <>
                   <div className="flex items-center gap-4">
                     <img
-                      src="/assets/space-two.png"
+                      src={tabDetails.images[0]}
                       alt="ggg"
                       className="w-[200px] h-[134px] rounded-lg"
                     />
                     <div className="flex flex-col gap-2 items-start">
-                      <h1 className="font-bold text-2xl">{tabDetails.name}</h1>
+                      <h1 className="font-bold text-2xl">{tabDetails?.name}</h1>
                       <p className="text-base">
-                        Location: {tabDetails.location}
+                        Location: {tabDetails?.street} {tabDetails?.city}
                       </p>
                       <p className="text-base">
                         Duration:{" "}

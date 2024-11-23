@@ -23,7 +23,7 @@ const tabSchema = new mongoose.Schema({
     },
     amenities: [{
         type: String,
-        enum: ["wifi", "ac", "projector", "printer", "cafe", "parking", "whiteboard", "power backup", "smart tv", "locker storage"],
+        enum: ["wifi", "ac", "fans", "projector", "printer", "cafe", "parking", "whiteboard", "power backup", "smart tv", "locker storage", "screen", "kitchen"],
     }],
     price: {
         type: Number, // Price per hour/day, depending on your needs

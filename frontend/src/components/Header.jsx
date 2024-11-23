@@ -65,9 +65,12 @@ const Header = () => {
   return (
     <div className="container font-acronym flex items-center justify-between py-4">
       <div className="flex items-center gap-6">
+      <span>
         <Link to="/">
-          <img src="/logo.svg" alt="TabOS" />
+        <img src="/tab.svg" alt="TabOS" className="size-20" />
+        <span className="text-lg font-bold hidden">TabOS</span>
         </Link>
+        </span>
         {/* <form onSubmit={handleSearchSubmit} className="flex items-center gap-1">
           <button>
             <img

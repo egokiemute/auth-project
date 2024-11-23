@@ -1,47 +1,53 @@
 import express from "express";
 import dotenv from "dotenv";
-// import fs from 'fs';
-// import * as admin from 'firebase-admin';
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import path from "path";
 
 import { connectDB } from "./db/connectDB.js";
-import authRoutes from "./routes/auth.route.js"
+import authRoutes from "./routes/auth.route.js";
 
 dotenv.config();
-
-// // Read and parse the Firebase service account JSON file
-// const serviceAccount = JSON.parse(
-//     fs.readFileSync(new URL('./utils/client_secret.json', import.meta.url))
-// );
-
-// // Initialize Firebase Admin
-// admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount)
-// });
 
 const app = express();
 const PORT = process.env.PORT || 8000;
 const __dirname = path.resolve();
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }))
+// Allowed origins
+const allowedOrigins = [
+  "http://localhost:5173",  // Development origin
+  "https://usetabos.com",   // Production origin
+];
 
-app.use(express.json());  // this allows us to parse incoming requests req.body
-app.use(cookieParser()); // allow us to parse incoming cookies
+// CORS configuration
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no `Origin` (e.g., curl, server-to-server requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // Allow credentials (cookies, etc.)
+};
+
+app.use(cors(corsOptions));
+app.use(express.json());  // Parse JSON body
+app.use(cookieParser());  // Parse cookies
 
 // Authentication Routes
-app.use("/api/auth", authRoutes)
+app.use("/api/auth", authRoutes);
 
-if(process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "frontend/dist")));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "frontend/dist")));
 
-    app.get("*", (req, res) => {
-        res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
-    });
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+  });
 }
 
 app.listen(PORT, () => {
-    connectDB();
-    console.log("Server is running in port 8000");
+  connectDB();
+  console.log(`Server is running on port ${PORT}`);
 });
