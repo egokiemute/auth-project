@@ -21,6 +21,7 @@ import TabDetail from "./components/TabDetail";
 import Settings from "./pages/Settings";
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
+import DesktopOnly from "./pages/DesktopOnly";
 // import { Settings } from "lucide-react";
 
 // protect routes that require authentication
@@ -61,12 +62,20 @@ function App() {
     checkAuth();
   }, [checkAuth]);
 
+  const isMobile = window.innerWidth <= 768;
+
+  if (isMobile) {
+    window.location.href = "/desktop-only";
+    return null;
+  }
+
   if (isCheckingAuth) return <LoadingSpinner />;
   return (
     <AppLayout>
       <div className="min-h-screen bg-[#FAFAFA] relative overflow-hidden">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/desktop-only" element={<DesktopOnly />} />
           <Route path="/search" element={<Search />} />
           <Route path="/spaces" element={<Spaces />} />
           <Route path="/reservations" element={<MyReservations />} />
